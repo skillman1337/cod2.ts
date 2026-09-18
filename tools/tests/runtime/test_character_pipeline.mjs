@@ -31,6 +31,10 @@ import {
 	Character_Lerp,
 	Character_BlendTracks,
 	CHARACTER_TORSO_BONES,
+	DObjCreate,
+	DObjCalcSkel,
+	XModelGetBoneIndex,
+	XModelNumBones,
 } from '../../../dist/engine/common/character.js';
 import {
 	Character_CreateControllers,
@@ -214,9 +218,13 @@ assert.deepEqual( worldRoot[1], [ 100, 200, 50 ], 'World root origin must match 
 assert( Math.abs( worldRoot[0][2] - Math.sin( Math.PI / 4 ) ) < 1e-4, 'Quaternion Z component must match 90 deg yaw' );
 assert( Math.abs( worldRoot[0][3] - Math.cos( Math.PI / 4 ) ) < 1e-4, 'Quaternion W component must match 90 deg yaw' );
 
-// 3. Load model and animation JSON from dist
-const modelsDir = path.resolve( 'dist/characters/models' );
-const animsDir = path.resolve( 'dist/characters/animations' );
+// 3. Load model and animation JSON from dist or public
+const modelsDir = fs.existsSync( path.resolve( 'dist/characters/models' ) )
+	? path.resolve( 'dist/characters/models' )
+	: path.resolve( 'public/characters/models' );
+const animsDir = fs.existsSync( path.resolve( 'dist/characters/animations' ) )
+	? path.resolve( 'dist/characters/animations' )
+	: path.resolve( 'public/characters/animations' );
 
 const bodyModel = JSON.parse( fs.readFileSync( path.join( modelsDir, 'playerbody_american_normandy01.json' ), 'utf8' ) );
 const headModel = JSON.parse( fs.readFileSync( path.join( modelsDir, 'head_us_ranger_braeburn.json' ), 'utf8' ) );
@@ -243,6 +251,25 @@ assert( headBoneIdx >= 0, 'j_head bone must exist in body' );
 const headAttachment = bodyPoses[headBoneIdx];
 const helmetPoses = Character_PoseHelmet( helmetModel, headAttachment );
 assert.equal( helmetPoses.length, helmetModel.bones.length, 'Every helmet bone must have an evaluated pose' );
+
+// Native DObj composition test (0x45a5c, 0xb6812, 0x752f0, 0x7561a)
+assert.equal( XModelNumBones( bodyModel ), bodyModel.bones.length, 'XModelNumBones must match bones count' );
+assert( XModelGetBoneIndex( bodyModel, 'j_head' ) >= 0, 'XModelGetBoneIndex must find j_head' );
+assert.equal( XModelGetBoneIndex( bodyModel, 'nonexistent_tag' ), -1, 'XModelGetBoneIndex must return -1 for unknown bone' );
+
+const dobj = DObjCreate( [
+	{ model: bodyModel },
+	{ model: headModel, attachTagName: 'j_head' },
+	{ model: helmetModel, attachTagName: 'j_helmet' },
+] );
+assert.equal( dobj.models.length, 3, 'DObjCreate must assemble 3 models' );
+assert.equal( dobj.models[1].attachBoneIndex, XModelGetBoneIndex( bodyModel, 'j_head' ), 'DObjCreate must resolve attachBoneIndex' );
+
+const dobjSkel = DObjCalcSkel( dobj, tracks );
+assert.equal( dobjSkel.modelPoses.length, 3, 'DObjCalcSkel must produce poses for 3 models' );
+assert.equal( dobjSkel.modelPoses[0].length, bodyModel.bones.length, 'DObj body poses must match bone count' );
+assert.equal( dobjSkel.modelPoses[1].length, headModel.bones.length, 'DObj head poses must match bone count' );
+assert.equal( dobjSkel.modelPoses[2].length, helmetModel.bones.length, 'DObj helmet poses must match bone count' );
 
 // 5. Skinning test
 const bodySurface = bodyModel.surfaces[0];
@@ -562,6 +589,37 @@ for ( const bone of testBones ) {
 		assert( dot > 0.85, `Bone ${bone} transition dot product must be > 0.85 (got ${dot.toFixed(3)}) across blend step` );
 	}
 }
+
+// 16. Native DObj composite skeleton & accessory attachment test (0x752f0, 0x7561a)
+const testDObj = DObjCreate( [
+	{ model: bodyModel },
+	{ model: headModel },
+	{ model: helmetModel, attachTagName: 'j_helmet' },
+] );
+assert.equal( testDObj.models.length, 3, 'DObjCreate must assemble 3 models' );
+
+const testDObjSkel = DObjCalcSkel( testDObj, tracks );
+assert.equal( testDObjSkel.modelPoses.length, 3, 'DObjCalcSkel must evaluate 3 models' );
+assert.equal( testDObjSkel.modelPoses[0].length, bodyModel.bones.length, 'Body bone poses must match count' );
+assert.equal( testDObjSkel.modelPoses[1].length, headModel.bones.length, 'Head bone poses must match count' );
+assert.equal( testDObjSkel.modelPoses[2].length, helmetModel.bones.length, 'Helmet bone poses must match count' );
+
+const headHelmetBoneIdx = headModel.bones.findIndex( ( b ) => b.name.toLowerCase() === 'j_helmet' );
+assert( headHelmetBoneIdx >= 0, 'j_helmet bone must exist in head model' );
+const headHelmetPose = testDObjSkel.modelPoses[1][headHelmetBoneIdx];
+const helmetRootPose = testDObjSkel.modelPoses[2][0];
+
+// Helmet root pose must sit exactly at the head model's j_helmet attachment pose
+assert.deepEqual( helmetRootPose, headHelmetPose, 'Helmet root pose must align with head j_helmet attachment transform' );
+
+// 17. Locomotion playhead & footstep audio synchronization test
+// Footstep audio triggers when (cycle + 64) ^ (next + 64) crosses 128 (bobCycle=64 and 192).
+// Looping locomotion playheads lock directly to ((bobCycle & 255) / 256) * duration so animation
+// footfalls never drift from footstep sound triggers.
+const locomotionPlayhead64 = ( ( 64 & 255 ) / 256.0 ) * runDuration;
+const locomotionPlayhead192 = ( ( 192 & 255 ) / 256.0 ) * runDuration;
+assert.equal( locomotionPlayhead64, leftStepTime, 'bobCycle=64 locomotion playhead must match left footstrike timestamp' );
+assert.equal( locomotionPlayhead192, rightStepTime, 'bobCycle=192 locomotion playhead must match right footstrike timestamp' );
 
 console.log( `Skinning verified: ${bodySurface.indices.length} indices skinned, height range [${minZ.toFixed(1)}, ${maxZ.toFixed(1)}] units.` );
 console.log( 'Lean controller, weapon attachment, bobCycle footstep sync, ADS blending, and torso reload crossfade verified!' );

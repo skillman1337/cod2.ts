@@ -25,7 +25,7 @@ A map unit owns its geometry, lightmaps and manifest; images remain global.
 export function assetRoute( requested ) {
 	safePath( requested );
 	let path = requested;
-	path = path.replace( /^(?:viewmodels|characters)\/(models|animations)\//, 'assets/$1/' );
+	path = path.replace( /^(?:viewmodels|characters)\/(models|animations|textures)\//, 'assets/$1/' );
 	let match;
 
 	if ( ( match = /^maps\/([a-z0-9_][a-z0-9_-]*)\/(.+)$/i.exec( path ) ) ) {

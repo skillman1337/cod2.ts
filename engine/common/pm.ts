@@ -1294,8 +1294,9 @@ function PM_MoveSingle(
 	}
 
 	if ( move.ladder && !move.grounded && move.commandTime - move.jumpTime >= 300 ) {
-		const cycle = Movement_LadderCycle( move.bobCycle ?? 0, msec, state.velocity[2], Boolean( move.lean ) );
+		const cycle = Movement_LadderCycle( move.bobCycle ?? 0, msec, state.velocity[2], Boolean( move.lean ), move.bobFraction ?? 0 );
 		move.bobCycle = cycle.cycle;
+		move.bobFraction = cycle.fraction;
 
 		if ( cycle.step ) {
 			Movement_Emit(
@@ -1320,14 +1321,16 @@ function PM_MoveSingle(
 				PM_Dvar( 'player_strafeSpeedScale', PM_DEFAULT_STRAFE_SPEED_SCALE )
 			);
 
-			const cycle = Movement_Cycle( move.bobCycle ?? 0, msec, rate );
+			const cycle = Movement_Cycle( move.bobCycle ?? 0, msec, rate, move.bobFraction ?? 0 );
 			move.bobCycle = cycle.cycle;
+			move.bobFraction = cycle.fraction;
 
 			if ( cycle.step && ( fm || rm ) ) {
 				Movement_Emit( move, kind, after!.surfaceFlags );
 			}
 		} else if ( speed < 1 ) {
 			move.bobCycle = 0;
+			move.bobFraction = 0;
 		}
 	}
 

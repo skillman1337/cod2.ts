@@ -49,7 +49,7 @@ characters = {
     }
 }
 
-target_models = set()
+target_models = set(['weapon_m1carbine'])
 for char_def in characters.values():
     target_models.add(char_def['body'])
     target_models.add(char_def['head'])

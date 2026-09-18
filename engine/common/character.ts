@@ -525,8 +525,11 @@ export function Character_EvaluateTracks(
 			: Math.max( 0, Math.min( anim.frames, elapsed ) );
 
 	for ( const [name, c] of Object.entries( anim.channels ) ) {
-		const q = Character_Track( c.rotations, c.rotation_times, f, true );
-		const p = Character_Track( c.translations, c.translation_times, f, false );
+		// XAnimCalc: a LISTED zero-key channel contributes identity, not bind pose.
+		// Only an ABSENT bone falls back to bind rotation in Character_PoseModel.
+		// Decode at evaluation time so previously cached empty arrays work too.
+		const q = Character_Track( c.rotations, c.rotation_times, f, true ) ?? [ 0, 0, 0, 1 ];
+		const p = Character_Track( c.translations, c.translation_times, f, false ) ?? [ 0, 0, 0 ];
 		const target = ( result[name] ??= {} );
 
 		if ( q ) {
@@ -753,6 +756,195 @@ export function Character_WorldRoot( origin: vec3_t, yaw: number ): vm_pose_t {
 	const q = [0, 0, Math.sin( rad ), Math.cos( rad )];
 
 	return [q, [origin[0], origin[1], origin[2]]];
+}
+
+// ---------------------------------------------------------------------------
+// native DObj skeletal hierarchy & posing (0x45a5c, 0xb6812, 0x752f0, 0x7561a)
+// ---------------------------------------------------------------------------
+
+export interface dobj_model_t {
+	model: character_model_t;
+	attachTagName?: string;
+	attachBoneIndex?: number;
+}
+
+export interface dobj_t {
+	models: dobj_model_t[];
+}
+
+export interface dobj_skel_t {
+	modelPoses: vm_pose_t[][];
+}
+
+/**
+ * @exec helper
+ * ================
+ * XModelGetBoneIndex
+ *
+ * Native XModelGetBoneIndex: 0x45a5c.
+ * Finds the index of a bone in an XModel by name (case-insensitive).
+ * Returns -1 if the tag is not present.
+ * ================
+ */
+export function XModelGetBoneIndex( model: character_model_t, name: string ): number {
+	const target = name.toLowerCase();
+	return model.bones.findIndex( ( b ) => b.name.toLowerCase() === target );
+}
+
+/**
+ * @exec helper
+ * ================
+ * XModelNumBones
+ *
+ * Native XModelNumBones: 0xb6812.
+ * Returns the total number of bones defined in an XModel.
+ * ================
+ */
+export function XModelNumBones( model: character_model_t ): number {
+	return model.bones.length;
+}
+
+/**
+ * @exec helper
+ * ================
+ * DObjCreate
+ *
+ * Native DObjCreate: 0x752f0 / 0x754be.
+ * Constructs a composite DObj display object from root and attached models.
+ * Resolves attachment tag indices to parent model bones.
+ * ================
+ */
+export function DObjCreate(
+	models: ( character_model_t | dobj_model_t | null | undefined )[]
+): dobj_t {
+	const validEntries: dobj_model_t[] = [];
+
+	for ( const item of models ) {
+		if ( !item ) continue;
+
+		if ( 'bones' in item ) {
+			validEntries.push( { model: item } );
+		} else if ( item.model ) {
+			validEntries.push( { ...item } );
+		}
+	}
+
+	if ( validEntries.length === 0 ) {
+		return { models: [] };
+	}
+
+	// Model 0 is the root model (e.g. body)
+	const rootModel = validEntries[0].model;
+
+	for ( let i = 1; i < validEntries.length; i++ ) {
+		const entry = validEntries[i];
+		if ( entry.attachTagName && entry.attachBoneIndex === undefined ) {
+			const idx = XModelGetBoneIndex( rootModel, entry.attachTagName );
+			entry.attachBoneIndex = idx >= 0 ? idx : undefined;
+		}
+	}
+
+	return { models: validEntries };
+}
+
+/**
+ * @exec helper
+ * ================
+ * DObjCalcSkel
+ *
+ * Native DObjCalcSkel: 0x7561a / 0x75d90 / 0x763c3.
+ * Computes composite skeletal bone matrices/poses across all DObj models.
+ * Evaluates track animation, controller overrides, shared bone inheritance,
+ * and attachment tag hierarchies.
+ * ================
+ */
+export function DObjCalcSkel(
+	dobj: dobj_t,
+	tracks: Record<string, Partial<{ q: number[]; p: number[] }>> = {},
+	overrides?: character_bone_overrides_t
+): dobj_skel_t {
+	const modelPoses: vm_pose_t[][] = [];
+	const identity: vm_pose_t = [ [ 0, 0, 0, 1 ], [ 0, 0, 0 ] ];
+
+	if ( dobj.models.length === 0 ) {
+		return { modelPoses };
+	}
+
+	// 1. Model 0 (root model, e.g. player body)
+	const rootEntry = dobj.models[0];
+	const rootPoses = Character_PoseModel( rootEntry.model, tracks, undefined, overrides );
+	modelPoses.push( rootPoses );
+
+	// Build bone name lookup for root model to handle shared bone inheritance (0x7561a)
+	const rootBoneMap = new Map<string, number>();
+	rootEntry.model.bones.forEach( ( b, idx ) => rootBoneMap.set( b.name.toLowerCase(), idx ) );
+
+	// 2. Attached models (head, helmet, weapon, etc.)
+	for ( let mIdx = 1; mIdx < dobj.models.length; mIdx++ ) {
+		const entry = dobj.models[mIdx];
+		const model = entry.model;
+
+		// Resolve base attachment fallback transform from parent models
+		let attachTransform: vm_pose_t = identity;
+
+		if ( entry.attachBoneIndex !== undefined && rootPoses[entry.attachBoneIndex] ) {
+			attachTransform = rootPoses[entry.attachBoneIndex];
+		} else if ( entry.attachTagName ) {
+			const tagLower = entry.attachTagName.toLowerCase();
+			// Search preceding models in reverse order
+			let found = false;
+			for ( let p = mIdx - 1; p >= 0 && !found; p-- ) {
+				const pModel = dobj.models[p].model;
+				const pPoses = modelPoses[p];
+				const bIdx = pModel.bones.findIndex( ( b ) => b.name.toLowerCase() === tagLower );
+				if ( bIdx >= 0 && pPoses[bIdx] ) {
+					attachTransform = pPoses[bIdx];
+					found = true;
+				}
+			}
+		}
+
+		// An attached accessory model (such as a helmet or weapon attached to an explicit tag)
+		// attaches rigidly to its tag transform. It must not double-evaluate character body animation tracks.
+		const isAttachedAccessory = Boolean( entry.attachTagName );
+		const currentPoses: vm_pose_t[] = [];
+
+		for ( const b of model.bones ) {
+			const bLower = b.name.toLowerCase();
+			const sharedIndex = rootBoneMap.get( bLower );
+
+			// If bone is shared with root body (e.g. j_spine4, j_neck, j_head in head model),
+			// inherit the root body's calculated pose directly (native 0x7561a).
+			if ( sharedIndex !== undefined && rootPoses[sharedIndex] ) {
+				currentPoses.push( rootPoses[sharedIndex] );
+				continue;
+			}
+
+			const parentPose = b.parent >= 0 && currentPoses[b.parent] ? currentPoses[b.parent] : attachTransform;
+
+			if ( isAttachedAccessory ) {
+				currentPoses.push( VM_Compose( parentPose, b.pose ) );
+				continue;
+			}
+
+			const c = tracks[b.name];
+			const override = overrides?.get( b.name );
+			const q = override?.q ?? c?.q ?? b.pose[0];
+			const offset = override?.p ?? c?.p;
+			const p = b.pose[1].map( ( v, i ) => ( override && b.parent < 0 ? 0 : v ) + ( offset?.[i] ?? 0 ) );
+			const posed = VM_Compose( parentPose, [ q, p ] );
+
+			if ( override?.control ) {
+				posed[0] = VM_Compose( [ q, [ 0, 0, 0 ] ], [ parentPose[0], [ 0, 0, 0 ] ] )[0];
+			}
+
+			currentPoses.push( posed );
+		}
+
+		modelPoses.push( currentPoses );
+	}
+
+	return { modelPoses };
 }
 
 /**

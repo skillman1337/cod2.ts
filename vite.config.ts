@@ -42,6 +42,7 @@ function Vite_BuildRootConfig(): UserConfig {
 		assetsDir: 'app-code',
 		target: 'es2022',
 		modulePreload: false,
+		sourcemap: true,
 	};
 
 	config.plugins = [

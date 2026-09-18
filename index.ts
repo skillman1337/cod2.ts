@@ -9,8 +9,9 @@
 ===============================================================================
 */
 
-import { Com_Init, Com_Shutdown, Com_BeginLoop, com_init_args_t } from '@/engine/com/com.js';
+import { Com_Init, Com_Shutdown, Com_BeginLoop, Com_GetPlayer, com_init_args_t } from '@/engine/com/com.js';
 import { Com_Error, errcode_t } from '@/engine/common/common.js';
+import { Cvar_Get, Cvar_Set } from '@/engine/common/cvar.js';
 
 
 // ---------------------------------------------------------------------------
@@ -119,12 +120,54 @@ function Main_RegisterHmr(): void {
 /**
  * @exec bootstrap-once
  * ================
+ * Main_BindDebugGlobals
+ *
+ * Expose live engine inspection objects on window.cod2 for developer diagnostics.
+ * ================
+ */
+function Main_BindDebugGlobals(): void {
+	if ( typeof window === 'undefined' ) {
+		return;
+	}
+
+	( window as unknown as { cod2: unknown } ).cod2 = {
+		get player() {
+			return Com_GetPlayer();
+		},
+		get origin() {
+			return Com_GetPlayer().origin;
+		},
+		get velocity() {
+			return Com_GetPlayer().velocity;
+		},
+		get speed() {
+			const v = Com_GetPlayer().velocity;
+			return Math.hypot( v[0], v[1] );
+		},
+		get angles() {
+			return Com_GetPlayer().angles;
+		},
+		get movement() {
+			return Com_GetPlayer().movement;
+		},
+		cvar: {
+			get: ( name: string ) => Cvar_Get( name ),
+			set: ( name: string, value: string ) => Cvar_Set( name, value ),
+		},
+	};
+}
+
+
+/**
+ * @exec bootstrap-once
+ * ================
  * main
  *
  * Init common layer, hand off to com frame loop.
  * ================
  */
 function main(): void {
+	Main_BindDebugGlobals();
 	Main_StartGame();
 }
 

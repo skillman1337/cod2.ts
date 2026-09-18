@@ -33,6 +33,8 @@ import {
 	Character_SkinSurface,
 	CHARACTER_TORSO_BONES,
 	BG_RunLerpFrameRate,
+	DObjCreate,
+	DObjCalcSkel,
 	type lerpFrame_t,
 	type character_catalog_t,
 	type character_model_t,
@@ -633,7 +635,18 @@ export function RGPU_CharacterDraw(
 	const currAnim = animations[currentAnimKey];
 	const sampleTimeMs = refdef.movement?.commandTime ?? refdef.time * 1000;
 	const speedScale = BG_RunLerpFrameRate( legsLerpFrame, currAnim, groundOrigin, sampleTimeMs, !!ladder );
-	currentPlayhead += dt * 1000 * speedScale;
+
+	// Synchronize looping locomotion playhead with player movement gait cycle (bobCycle).
+	// Footstep sounds trigger at bobCycle=64 (left footstrike) and bobCycle=192 (right footstrike),
+	// which corresponds exactly to 25% and 75% phase of the authored locomotion cycle.
+	const isLocomotion = Boolean( currAnim?.loop && ( ladder || horizSpeed > 5 ) );
+	if ( isLocomotion && refdef.movement?.bobCycle !== undefined ) {
+		const animDuration = Character_AnimDurationMs( currAnim );
+		currentPlayhead = ( ( ( refdef.movement.bobCycle ) & 255 ) / 256.0 ) * animDuration;
+	} else {
+		currentPlayhead += dt * 1000 * speedScale;
+	}
+
 	if ( currAnim && ( ladder || horizSpeed > 5 ) && !Character_AnimMoveSpeed( currAnim ) && !assetWarnings.has( 'delta:' + currentAnimKey ) ) {
 		assetWarnings.add( 'delta:' + currentAnimKey );
 		Con_Printf( "Animation '" + currentAnimKey + "' has zero/missing root-motion speed. Playing its authored rate, not inventing a movement divisor. Verify the exported delta track.\n" );
@@ -732,34 +745,31 @@ export function RGPU_CharacterDraw(
 	}
 
 	// Native DObj control tags replace local animation, rather than rotating a
-	// guessed torso bone. Pose the shared body/head in OBJECT space first.
+	// guessed torso bone. Construct the composite DObj (0x752f0) and evaluate
+	// all model bone hierarchies in object space first (0x7561a).
 	const overrides = Character_ControllerOverrides( controllerState );
-	const identity: vm_pose_t = [ [ 0, 0, 0, 1 ], [ 0, 0, 0 ] ];
 	const worldRoot = Character_WorldRoot( groundOrigin, playerYaw );
-	const bodyObjectPoses = Character_PoseModel( bodyModel, tracks, undefined, overrides );
-	const headObjectPoses = headModel ? Character_PoseAttachedModel( headModel, bodyModel, bodyObjectPoses, identity, tracks, overrides ) : [];
-	const bodyPoses = bodyObjectPoses.map( ( pose ) => VM_Compose( worldRoot, pose ) );
-	const headPoses = headObjectPoses.map( ( pose ) => VM_Compose( worldRoot, pose ) );
 
-	let helmetPoses: vm_pose_t[] = [];
-	if ( helmetModel ) {
-		// Prefer attachment to j_helmet in head model, fallback to j_head in body
-		const helmetBoneIdx = headModel?.bones.findIndex( ( b ) => b.name === 'j_helmet' ) ?? -1;
-		const bodyHeadIdx = bodyModel.bones.findIndex( ( b ) => b.name === 'j_head' );
-		const headAttachment = helmetBoneIdx >= 0 && headPoses[helmetBoneIdx]
-			? headPoses[helmetBoneIdx]
-			: ( bodyHeadIdx >= 0 && bodyPoses[bodyHeadIdx] ? bodyPoses[bodyHeadIdx] : worldRoot );
-		helmetPoses = Character_PoseHelmet( helmetModel, headAttachment );
-	}
+	const dobj = DObjCreate( [
+		{ model: bodyModel },
+		headModel ? { model: headModel } : null,
+		helmetModel ? { model: helmetModel, attachTagName: 'j_helmet' } : null,
+		weaponModel ? { model: weaponModel, attachTagName: 'tag_weapon_right' } : null,
+	] );
 
-	let weaponPoses: vm_pose_t[] = [];
-	if ( weaponModel ) {
-		const tagWeaponRightIdx = bodyModel.bones.findIndex( ( b ) => b.name === 'tag_weapon_right' );
-		const weaponAttachment = tagWeaponRightIdx >= 0 && bodyPoses[tagWeaponRightIdx]
-			? bodyPoses[tagWeaponRightIdx]
-			: worldRoot;
-		weaponPoses = Character_PoseWeapon( weaponModel, weaponAttachment );
-	}
+	const skel = DObjCalcSkel( dobj, tracks, overrides );
+	const bodyPoses = skel.modelPoses[0].map( ( pose ) => VM_Compose( worldRoot, pose ) );
+
+	let modelIndex = 1;
+	const headPoses = headModel && skel.modelPoses[modelIndex]
+		? skel.modelPoses[modelIndex++].map( ( pose ) => VM_Compose( worldRoot, pose ) )
+		: [];
+	const helmetPoses = helmetModel && skel.modelPoses[modelIndex]
+		? skel.modelPoses[modelIndex++].map( ( pose ) => VM_Compose( worldRoot, pose ) )
+		: [];
+	const weaponPoses = weaponModel && skel.modelPoses[modelIndex]
+		? skel.modelPoses[modelIndex++].map( ( pose ) => VM_Compose( worldRoot, pose ) )
+		: [];
 
 	// Build camera uniform buffer (matches world camera projection in rgpu_level.ts)
 	// 0x4cf270 multiplies tan(fov/2) by .75, then by the display aspect.

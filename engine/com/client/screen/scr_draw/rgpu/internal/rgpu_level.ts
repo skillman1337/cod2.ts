@@ -69,6 +69,7 @@ let blurred: GPUTexture | null = null;
 let blurSize = '';
 let blurPipeline: GPURenderPipeline | null = null;
 let blurLayout: GPUBindGroupLayout | null = null;
+let blurSampler: GPUSampler | null = null;
 let blurBuffers: GPUBuffer[] = [];
 let blurBindings: GPUBindGroup[] = [];
 
@@ -127,6 +128,7 @@ export function RGPU_LevelDestroy(): void {
 	blurSize = '';
 	blurPipeline = null;
 	blurLayout = null;
+	blurSampler = null;
 	blurBuffers = [];
 	blurBindings = [];
 
@@ -767,23 +769,37 @@ Returns or resizes the depth attachment for rendering level geometry.
 ====================
 */
 export function RGPU_LevelDepth( width: number, height: number ): GPUTextureView | null {
-	if ( !ready || !resources ) {
+	if ( !ready || !resources || width < 1 || height < 1 ) {
 		return null;
 	}
 
 	const size = width + 'x' + height;
 
-	if ( size !== depthSize ) {
+	if ( size !== depthSize || !depth ) {
 		depth?.destroy();
-		depth = resources.createTexture!( {
-			size: [width, height],
-			format: 'depth24plus',
-			usage: GPUTextureUsage.RENDER_ATTACHMENT,
-		} );
-		depthSize = size;
+		depth = null;
+		depthSize = '';
+
+		try {
+			depth = resources.createTexture!( {
+				label: 'cod2_world_depth',
+				size: [width, height],
+				format: 'depth24plus',
+				usage: GPUTextureUsage.RENDER_ATTACHMENT,
+			} );
+			depthSize = size;
+		} catch {
+			depth = null;
+			depthSize = '';
+			return null;
+		}
 	}
 
-	return depth!.createView();
+	try {
+		return depth.createView();
+	} catch {
+		return null;
+	}
 }
 
 /*
@@ -941,6 +957,8 @@ struct Varying {
 			primitive: { topology: 'triangle-list' },
 		} );
 
+		blurSampler = res.createSampler!( { magFilter: 'linear', minFilter: 'linear' } );
+
 		blurBuffers = [0, 1].map( () => res.createBuffer( {
 			size: LEVEL_BLUR_BUFFER_SIZE,
 			usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
@@ -949,33 +967,45 @@ struct Varying {
 
 	const size = width + 'x' + height;
 
-	if ( size !== blurSize ) {
+	if ( size !== blurSize || !scene || !blurred ) {
 		scene?.destroy();
 		blurred?.destroy();
+		scene = null;
+		blurred = null;
+		blurSize = '';
 
-		const descriptor = {
-			size: [width, height],
-			format: res.format,
-			usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
-		};
+		try {
+			const descriptor = {
+				size: [width, height],
+				format: res.format,
+				usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,
+			};
 
-		scene = res.createTexture!( descriptor );
-		blurred = res.createTexture!( descriptor );
-		blurSize = size;
+			scene = res.createTexture!( descriptor );
+			blurred = res.createTexture!( descriptor );
+			blurSize = size;
 
-		const sampler = res.createSampler!( { magFilter: 'linear', minFilter: 'linear' } );
-
-		blurBindings = [scene, blurred].map( ( tex, index ) => res.createBindGroup( {
-			layout: blurLayout!,
-			entries: [
-				{ binding: 0, resource: tex.createView() },
-				{ binding: 1, resource: sampler },
-				{ binding: 2, resource: { buffer: blurBuffers[index] } },
-			],
-		} ) );
+			blurBindings = [scene, blurred].map( ( tex, index ) => res.createBindGroup( {
+				layout: blurLayout!,
+				entries: [
+					{ binding: 0, resource: tex.createView() },
+					{ binding: 1, resource: blurSampler! },
+					{ binding: 2, resource: { buffer: blurBuffers[index] } },
+				],
+			} ) );
+		} catch {
+			scene = null;
+			blurred = null;
+			blurSize = '';
+			return null;
+		}
 	}
 
-	return scene!.createView();
+	try {
+		return scene.createView();
+	} catch {
+		return null;
+	}
 }
 
 /*
@@ -986,7 +1016,11 @@ Returns the secondary render target for separable two-pass gaussian blur.
 ====================
 */
 export function RGPU_LevelBlurTarget(): GPUTextureView | null {
-	return blurred?.createView() ?? null;
+	try {
+		return blurred?.createView() ?? null;
+	} catch {
+		return null;
+	}
 }
 
 /*

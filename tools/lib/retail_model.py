@@ -137,7 +137,7 @@ class ModelDecoder:
                 values = struct.unpack_from('<16f', vb, offset)
                 influences = []
                 extra = vb[offset + 60] if bone < 0 else 0
-                primary = struct.unpack_from('<H', vb, offset + 62)[0] // 64 if bone < 0 else bone // 64
+                primary = struct.unpack_from('<H', vb, offset + 62)[0] // 64 if bone < 0 else bone
                 offset += 64
                 total = 0
                 for _ in range(extra):

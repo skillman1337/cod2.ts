@@ -140,17 +140,26 @@ export function Movement_Rate(
  *
  * Advances 8-bit footstep cycle counter and detects step phase boundary crossing (0x518abc, 0x5182f0).
  * Detects crossing the half-cycle (128) boundary using offset XOR logic.
+ * Retail truncates the scaled advance every call; on fixed server ticks that is
+ * exact, but on uncapped variable frametimes a slowed (ADS) advance can stay
+ * below 1.0 cycle units forever and freeze gait + footsteps. The fractional
+ * remainder is carried in `fraction` so total progress is exact at any slice
+ * size while per-slice integers still match retail when no remainder exists.
  * ================
  */
 export function Movement_Cycle(
 	cycle: number,
 	msec: number,
-	rate: number
-): { cycle: number; step: boolean } {
-	const next = Math.trunc( cycle + msec * Math.fround( rate ) ) & CYCLE_MASK;
-	const step = Boolean( ( ( cycle + CYCLE_OFFSET ) ^ ( next + CYCLE_OFFSET ) ) & CYCLE_HALF );
+	rate: number,
+	fraction: number = 0
+): { cycle: number; step: boolean; fraction: number } {
+	const base = Math.trunc( cycle ) & CYCLE_MASK;
+	const total = fraction + msec * Math.fround( rate );
+	const advance = Math.trunc( total );
+	const next = ( base + advance ) & CYCLE_MASK;
+	const step = Boolean( ( ( base + CYCLE_OFFSET ) ^ ( next + CYCLE_OFFSET ) ) & CYCLE_HALF );
 
-	return { cycle: next, step };
+	return { cycle: next, step, fraction: total - advance };
 }
 
 /**
@@ -166,17 +175,21 @@ export function Movement_LadderCycle(
 	cycle: number,
 	msec: number,
 	vertical: number,
-	slow: boolean
-): { cycle: number; step: boolean } {
+	slow: boolean,
+	fraction: number = 0
+): { cycle: number; step: boolean; fraction: number } {
 	const f = Math.fround;
 	const rate = slow
 		? f( vertical ) * f( LADDER_CYCLE_FACTOR_SLOW ) * f( LADDER_CYCLE_WEIGHT_SLOW )
 		: f( vertical ) * f( LADDER_CYCLE_FACTOR_FAST ) * f( LADDER_CYCLE_WEIGHT_FAST );
 
-	const next = Math.trunc( cycle + msec * rate ) & CYCLE_MASK;
-	const step = Boolean( ( ( cycle + CYCLE_OFFSET ) ^ ( next + CYCLE_OFFSET ) ) & CYCLE_HALF );
+	const base = Math.trunc( cycle ) & CYCLE_MASK;
+	const total = fraction + msec * rate;
+	const advance = Math.trunc( total );
+	const next = ( base + advance ) & CYCLE_MASK;
+	const step = Boolean( ( ( base + CYCLE_OFFSET ) ^ ( next + CYCLE_OFFSET ) ) & CYCLE_HALF );
 
-	return { cycle: next, step };
+	return { cycle: next, step, fraction: total - advance };
 }
 
 

@@ -178,7 +178,8 @@ export function VM_Channels(
 	const apply = ( name: string, frame?: number, weight: number = 1 ) => {
 		const a = animations[name];
 
-		if ( !a ) {
+		// A disabled layer must not claim new bones, even with explicit keys.
+		if ( !a || weight <= 0 ) {
 			return;
 		}
 
@@ -188,8 +189,10 @@ export function VM_Channels(
 			: frame * a.frames;
 
 		for ( const [channelName, c] of Object.entries( a.channels ) ) {
-			const q = VM_Track( c.rotations, c.rotation_times, f, true );
-			const p = VM_Track( c.translations, c.translation_times, f, false );
+			// Listed zero-key XAnim channels explicitly contribute identity / zero.
+			// Leaving them undefined retains stale idle/ADS components or bind pose.
+			const q = VM_Track( c.rotations, c.rotation_times, f, true ) ?? [ 0, 0, 0, 1 ];
+			const p = VM_Track( c.translations, c.translation_times, f, false ) ?? [ 0, 0, 0 ];
 			const target = ( result[channelName] ??= {} );
 
 			if ( q ) {

@@ -13,7 +13,7 @@ import { Cbuf_Init, Cbuf_Execute, Cmd_WasQuitRequested, Cmd_ClearQuitRequest } f
 import { Con_Init, Con_Shutdown, Con_Printf, Com_Error, errcode_t } from '@/engine/common/common.js';
 import { Loading_Report } from '@/engine/common/loading.js';
 import { CL_Init, CL_Shutdown, CL_Frame, CL_SampleUsercmd, CL_HandleVidResize } from './client/cl_main.js';
-import { SV_Init, SV_Shutdown, SV_Frame } from './server/sv_main.js';
+import { SV_Init, SV_Shutdown, SV_Frame, SV_GetPlayer } from './server/sv_main.js';
 import {
 	dedicated,
 	Host_Init,
@@ -466,4 +466,15 @@ export function Com_BeginLoop(): void {
 	com_loop_generation++;
 	loop_generation = com_loop_generation;
 	requestAnimationFrame( ( t ) => Com_RafCallback( t, loop_generation ) );
+}
+
+
+/**
+ * @exec helper
+ * ================
+ * Com_GetPlayer
+ * ================
+ */
+export function Com_GetPlayer() {
+	return SV_GetPlayer();
 }

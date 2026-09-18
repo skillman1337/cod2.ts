@@ -612,3 +612,15 @@ export function SV_Frame( frametime: number, cmd: usercmd_t | null ): client_sna
 
 	return SV_BuildSnapshotForClients();
 }
+
+/**
+ * @exec helper
+ * ================
+ * SV_GetPlayer
+ *
+ * Authoritative player state for client prediction and diagnostics.
+ * ================
+ */
+export function SV_GetPlayer(): sv_player_t {
+	return sv_player;
+}

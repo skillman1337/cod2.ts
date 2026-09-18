@@ -25,12 +25,12 @@ flowchart LR
   n5 --> n8
 ```
 
-This plate has **9 functions and 8 resolved edges**. The full inventory contains 787 functions across 71 analyzed files, 1684 resolved call edges and 312 unresolved identifier calls. Unresolved calls are not guessed.
+This plate has **9 functions and 8 resolved edges**. The full inventory contains 794 functions across 71 analyzed files, 1697 resolved call edges and 315 unresolved identifier calls. Unresolved calls are not guessed.
 
 | Function | Source definition |
 | --- | --- |
-| `main` | [index.ts:127](../index.ts#L127) |
-| `Main_StartGame` | [index.ts:64](../index.ts#L64) |
+| `main` | [index.ts:169](../index.ts#L169) |
+| `Main_StartGame` | [index.ts:65](../index.ts#L65) |
 | `Com_Init` | [engine/com/com.ts:359](../engine/com/com.ts#L359) |
 | `Com_InitGraphics` | [engine/com/com.ts:145](../engine/com/com.ts#L145) |
 | `Com_InitListenGraphics` | [engine/com/com.ts:134](../engine/com/com.ts#L134) |
@@ -47,6 +47,6 @@ npm run docs:map
 npm run verify:docs
 ```
 
-Inventory SHA-256: `83f179d9b3efa5f0faba010b952bf2277dc4a5aab42058b32a2a8fedd807f070`. No clock time, machine name, retail asset or absolute filesystem path is embedded.
+Inventory SHA-256: `a03b6dcaf94505e64ff443c5b7c3217c5e0342e783bb7b953fc92fa514c8d011`. No clock time, machine name, retail asset or absolute filesystem path is embedded.
 
 [Full call inventory](execution_map.json) · [Execution contract](EXECUTION_MAP.md) · [Loading architecture](LOADING-ARCHITECTURE.md) · [README](../README.md)

@@ -10,6 +10,15 @@
 
 
 // ---------------------------------------------------------------------------
+// constants
+// ---------------------------------------------------------------------------
+
+export const VID_MAX_TEXTURE_DIMENSION = 4096;
+export const VID_MAX_DPR               = 2;
+export const VID_RESIZE_THROTTLE_MS    = 60;
+
+
+// ---------------------------------------------------------------------------
 // types
 // ---------------------------------------------------------------------------
 
@@ -40,6 +49,8 @@ export const vid: vid_t = {
 	valid: false,
 };
 
+let vid_last_apply_time = 0;
+
 
 // ---------------------------------------------------------------------------
 // forward
@@ -68,6 +79,7 @@ export function VID_Init(): void {
 	vid.height = 0;
 	vid.dpr = 1;
 	vid.valid = false;
+	vid_last_apply_time = 0;
 }
 
 
@@ -137,6 +149,7 @@ function VID_Invalidate(): void {
 	vid.width = 0;
 	vid.height = 0;
 	vid.dpr = 1;
+	vid_last_apply_time = 0;
 
 	VID_StompCanvasBackingStore();
 }
@@ -157,16 +170,34 @@ function VID_Invalidate(): void {
 export function VID_CheckResize(): boolean {
 	let size: vid_layout_size_t | null;
 
-	if ( !vid.canvas )
+	if ( !vid.canvas ) {
+		vid_last_apply_time = 0;
 		return VID_InvalidateAndReportChange();
+	}
 
 	size = VID_LayoutSize();
-	if ( size === null )
+	if ( size === null ) {
+		vid_last_apply_time = 0;
 		return VID_InvalidateAndReportChange();
+	}
 
 	if ( VID_SizeMatchesVid( size.width, size.height, size.dpr ) )
 		return false;
 
+	const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
+
+	// Initial configuration or recovery from collapsed state applies immediately.
+	if ( !vid.valid ) {
+		vid_last_apply_time = now;
+		VID_ApplySize( size.width, size.height, size.dpr );
+		return true;
+	}
+
+	// Throttle backing-store resize during rapid window drag to avoid flooding Vulkan memory.
+	if ( now - vid_last_apply_time < VID_RESIZE_THROTTLE_MS )
+		return false;
+
+	vid_last_apply_time = now;
 	VID_ApplySize( size.width, size.height, size.dpr );
 	return true;
 }
@@ -241,9 +272,9 @@ function VID_ScaleLayoutPixels( css_width: number, css_height: number ): vid_lay
 	let width: number;
 	let height: number;
 
-	dpr = window.devicePixelRatio || 1;
-	width = Math.max( 1, Math.floor( css_width * dpr ) );
-	height = Math.max( 1, Math.floor( css_height * dpr ) );
+	dpr = Math.min( window.devicePixelRatio || 1, VID_MAX_DPR );
+	width = Math.min( VID_MAX_TEXTURE_DIMENSION, Math.max( 1, Math.floor( css_width * dpr ) ) );
+	height = Math.min( VID_MAX_TEXTURE_DIMENSION, Math.max( 1, Math.floor( css_height * dpr ) ) );
 
 	return { width, height, dpr };
 }

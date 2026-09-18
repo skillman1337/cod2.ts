@@ -101,6 +101,13 @@ export interface pm_movement_t {
 	};
 	ladderDetached?: boolean;
 	bobCycle?: number;
+	/**
+	 * Sub-cycle gait remainder in [0, 1) cycle units carried across slices.
+	 * Retail truncates the scaled advance every server tick (0x518abc cvttss2si),
+	 * which is exact on fixed ticks; uncapped variable frametimes need the
+	 * remainder or a slowed (ADS) advance below 1.0 stalls forever.
+	 */
+	bobFraction?: number;
 	soundSequence?: number;
 	soundEvents?: {
 		sequence: number;
