@@ -54,6 +54,7 @@ const ui_menu_dvars: Record<string, string> = {
 	cg_drawFPS: '1',
 	cl_ingame: '0',
 	cl_updateavailable: '0',
+	com_maxfps: '0',
 	com_playerProfile: 'Player',
 	ui_multiplayer: '1',
 	shortversion: '1.2',
