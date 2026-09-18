@@ -10,6 +10,7 @@
 ===============================================================================
 */
 
+import { APP_BASE, appURL } from './deployment.mjs';
 import { bind, watchEngine } from './launcher-runtime.mjs';
 import { createDemandClient } from './demand-client.mjs';
 import { getSetting, putSetting, deleteSetting, transaction } from './db.mjs';
@@ -90,7 +91,7 @@ window.addEventListener( 'unhandledrejection', ( event ) => {
 window.addEventListener( 'cod2:engine-status', ( event ) => {
 	if ( event.detail?.phase === 'quit' ) {
 		document.exitPointerLock?.();
-		location.assign( '/?assets=manage' );
+		location.assign( appURL( '?assets=manage' ) );
 	}
 } );
 
@@ -152,7 +153,7 @@ async function play( cache ) {
 	}
 
 	if ( engineAttempted ) {
-		location.assign( '/' );
+		location.assign( appURL() );
 		return;
 	}
 
@@ -246,7 +247,7 @@ Spawns the background extraction worker to decompress game assets.
 */
 function extract( installation, id ) {
 	return new Promise( ( resolve, reject ) => {
-		worker = new Worker( '/browser-runtime/import.worker.js', { type: 'module' } );
+		worker = new Worker( appURL( 'browser-runtime/import.worker.js' ), { type: 'module' } );
 
 		cancelImport = () => {
 			worker?.terminate();
@@ -537,8 +538,8 @@ async function boot() {
 		throw new Error( 'This loader requires a desktop browser with directory access, local storage, and service workers, such as Chrome or Edge. There is no upload fallback.' );
 	}
 
-	if ( location.pathname !== '/' && location.pathname !== '/index.html' ) {
-		throw new Error( 'Deploy this build at the origin root (e.g. https://example.com/ or localhost:5173), not a subdirectory. Game assets and Service Worker require root scope.' );
+	if ( !location.pathname.startsWith( APP_BASE ) ) {
+		throw new Error( `Open this build under its configured path: ${APP_BASE}` );
 	}
 
 	ui.begin( 'check' );

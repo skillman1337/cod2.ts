@@ -10,6 +10,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../../../../common/asset_paths.js';
 import { Cvar_Get } from '@/engine/common/cvar.js';
 import { Con_Printf } from '@/engine/common/common.js';
 import { Level_WorldVisible, Level_Data } from '@/engine/common/level.js';
@@ -198,7 +199,7 @@ export function RGPU_CharacterPrepare( res: rgpu_draw_resources_t, upload: rgpu_
 
 	void ( async () => {
 		const json = async <T>( path: string ): Promise<T> => {
-			const r = await fetch( '/characters/' + path, { cache: 'no-cache' } );
+			const r = await Asset_Fetch( '/characters/' + path, { cache: 'no-cache' } );
 			if ( !r.ok ) throw new Error( path + ': ' + r.status );
 			return r.json() as Promise<T>;
 		};
@@ -290,7 +291,7 @@ export function RGPU_CharacterPrepare( res: rgpu_draw_resources_t, upload: rgpu_
 		// Lightgrid
 		if ( map ) {
 			try {
-				grid = await fetch( '/maps/' + map + '/lightgrid.json' ).then( ( r ) => ( r.ok ? r.json() : null ) );
+				grid = await Asset_Fetch( '/maps/' + map + '/lightgrid.json' ).then( ( r ) => ( r.ok ? r.json() : null ) );
 			} catch {
 				grid = null;
 			}

@@ -4,6 +4,7 @@ Optional test dependencies: Python Playwright and Chromium. Uses the installed
 Chromium executable when present, otherwise Playwright's managed Chromium.
 No web server, network access, or production-only test hooks are required.
 """
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -23,6 +24,8 @@ ROOT = Path(__file__).resolve().parents[3]
 class DossierUI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if not HAS_PLAYWRIGHT and os.environ.get("CI"):
+            raise RuntimeError("CI must install Playwright; do not silently skip browser verification")
         if not HAS_PLAYWRIGHT:
             raise unittest.SkipTest("Playwright not installed in current Python environment")
         cls.tmp = tempfile.TemporaryDirectory()
@@ -32,7 +35,7 @@ class DossierUI(unittest.TestCase):
         cls.pw = sync_playwright().start()
         executable = shutil.which('chromium') or shutil.which('chromium-browser')
         options = {'headless': True, 'args': ['--no-sandbox']}
-        if executable:
+        if executable and not os.environ.get('CI'):
             options['executable_path'] = executable
         cls.browser = cls.pw.chromium.launch(**options)
 

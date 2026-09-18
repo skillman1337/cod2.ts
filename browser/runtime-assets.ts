@@ -11,11 +11,14 @@
 */
 
 
+import { APP_BASE } from './deployment.mjs';
+import { Asset_SetBase } from '../engine/common/asset_paths.js';
+
 // ---------------------------------------------------------------------------
 // constants
 // ---------------------------------------------------------------------------
 
-export const ASSET_PREFIX = '/__cod2_local';
+export const ASSET_PREFIX = APP_BASE + '__cod2_local';
 export const GENERATION_UUID_PATTERN = /^[a-f0-9-]{36}$/;
 
 
@@ -44,6 +47,7 @@ export function Asset_Initialize( id: string, json: ReadonlyMap<string, unknown>
 		throw new Error( 'Invalid local asset generation.' );
 	}
 
+	Asset_SetBase( APP_BASE );
 	generation = id;
 	jsonAssets = json;
 }

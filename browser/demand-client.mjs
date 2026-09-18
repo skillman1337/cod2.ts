@@ -9,6 +9,7 @@
 */
 
 
+import { appURL } from './deployment.mjs';
 import { getSetting } from './db.mjs';
 import { safePath } from './storage.mjs';
 
@@ -31,7 +32,7 @@ export function createDemandClient( id, { files, report = () => {}, log = () => 
 
 	function start() {
 		if ( worker ) return;
-		worker = new Worker( '/browser-runtime/demand.worker.js', { type: 'module' } );
+		worker = new Worker( appURL( 'browser-runtime/demand.worker.js' ), { type: 'module' } );
 		worker.postMessage( { type: 'init', id, files } );
 		files = undefined;
 		worker.onmessage = event => {

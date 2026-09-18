@@ -39,7 +39,7 @@ Formats a Markdown link to a source file location with line anchor.
 ====================
 */
 function sourceLink( definition, label = definition.name ) {
-	return `[${label}](${definition.file}#L${definition.line})`;
+	return `[${label}](../${definition.file}#L${definition.line})`;
 }
 
 /*

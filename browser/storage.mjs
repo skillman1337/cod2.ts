@@ -10,6 +10,7 @@
 ===============================================================================
 */
 
+import { STORAGE_SUFFIX } from './deployment.mjs';
 import { getSetting, putSetting } from './db.mjs';
 import { mapLimit } from './async.mjs';
 
@@ -19,7 +20,7 @@ import { mapLimit } from './async.mjs';
 // ---------------------------------------------------------------------------
 
 export const CACHE_VERSION = 5;
-export const CACHE_FOLDER = 'cod2-local-assets-v5';
+export const CACHE_FOLDER = 'cod2-local-assets-v5' + STORAGE_SUFFIX;
 
 export const REQUIRED_FILES = [
 	'assets/ui/menus.json',

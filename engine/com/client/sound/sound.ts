@@ -8,6 +8,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../common/asset_paths.js';
 import menuMusicUrl from '@/assets/sound/music/menu_GRTEMP.mp3?url';
 import mouseOverUrl from '@/assets/sound/misc/mouse_ylover.wav?url';
 import mouseClickUrl from '@/assets/sound/misc/mouse_ylselect.wav?url';
@@ -127,7 +128,7 @@ function S_LoadMovementBuffer( url: string ): Promise<AudioBuffer> {
 	if ( !pending ) {
 		const context = s_ctx!;
 
-		pending = fetch( url )
+		pending = Asset_Fetch( url )
 			.then( ( r ) => {
 				if ( !r.ok ) {
 					throw new Error( String( r.status ) );
@@ -339,7 +340,7 @@ function S_AliasBeginLoad( alias: s_alias_sample_t, label: string ): void {
 		let encoded: ArrayBuffer;
 
 		try {
-			response = await fetch( alias.url );
+			response = await Asset_Fetch( alias.url );
 			if ( !response.ok )
 				return;
 
@@ -461,7 +462,7 @@ function S_MenuMusicBeginLoad(): void {
 		let encoded: ArrayBuffer;
 
 		try {
-			response = await fetch( S_MENU_MUSIC_URL );
+			response = await Asset_Fetch( S_MENU_MUSIC_URL );
 			if ( !response.ok )
 				return;
 
@@ -525,7 +526,7 @@ function S_LoadGameplayCatalogs(): void {
 
 	const movement = Promise.all(
 		['/sound/movement.json', '/sound/weapons.json'].map( ( url ) =>
-			fetch( url ).then( ( r ) => {
+			Asset_Fetch( url ).then( ( r ) => {
 				if ( !r.ok ) {
 					throw new Error( String( r.status ) );
 				}
@@ -546,7 +547,7 @@ function S_LoadGameplayCatalogs(): void {
 		} )
 		.catch( ( error ) => Con_Printf( 'Movement catalog: ' + String( error ) + '\n' ) );
 
-	const ambient = fetch( '/sound/ambient.json' )
+	const ambient = Asset_Fetch( '/sound/ambient.json' )
 		.then( ( r ) => {
 			if ( !r.ok ) {
 				throw new Error( String( r.status ) );
@@ -799,7 +800,7 @@ export function S_UpdateAmbient( map: string ): void {
 
 	void ( async () => {
 		try {
-			const response = await fetch( alias.url );
+			const response = await Asset_Fetch( alias.url );
 
 			if ( !response.ok ) {
 				throw new Error( String( response.status ) );

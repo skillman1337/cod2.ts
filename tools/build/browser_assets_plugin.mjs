@@ -103,7 +103,7 @@ Collects and transforms browser runtime scripts (db, storage, decoders, worker, 
 into memory buffers with computed SHA-256 manifests for local serving and deployment.
 ====================
 */
-export function runtimeFiles( root, _production = false ) {
+export function runtimeFiles( root, _production = false, base = '/' ) {
 	const files = new Map();
 	const sources = [];
 
@@ -114,6 +114,8 @@ export function runtimeFiles( root, _production = false ) {
 		sources.push( { path: source, sha256 } );
 		files.set( destination, Buffer.from( transform( bytes.toString( 'utf8' ) ) ) );
 	};
+
+	add( 'browser/deployment.mjs', 'browser-runtime/deployment.mjs', source => source.replace( "import.meta.env?.BASE_URL ?? '/'", JSON.stringify( base ) ) );
 
 	for ( const name of ['db.mjs', 'storage.mjs', 'async.mjs', 'opfs-writer.mjs', 'retail-files.mjs', 'install.mjs', 'asset-routing.mjs', 'demand-cache.mjs', 'source-files.mjs'] ) {
 		add( `browser/${name}`, `browser-runtime/${name}` );
@@ -148,7 +150,7 @@ export function runtimeFiles( root, _production = false ) {
 	add(
 		'browser/local-assets.sw.mjs',
 		'local-assets.sw.js',
-		( source ) => source.replaceAll( "'./", "'/browser-runtime/" )
+		( source ) => source.replaceAll( "'./", "'./browser-runtime/" )
 	);
 
 	const manifest = {
@@ -178,6 +180,7 @@ the browser-runtime files without leaking proprietary assets into production bun
 */
 export function browserAssetsPlugin( root ) {
 	let production = false;
+	let base = '/';
 	let runtime;
 
 	return {
@@ -186,6 +189,7 @@ export function browserAssetsPlugin( root ) {
 
 		configResolved( config ) {
 			production = config.command === 'build';
+			base = config.base;
 		},
 
 		resolveId( specifier ) {
@@ -211,7 +215,7 @@ export function browserAssetsPlugin( root ) {
 		},
 
 		buildStart() {
-			runtime = runtimeFiles( root, production );
+			runtime = runtimeFiles( root, production, base );
 
 			if ( production ) {
 				for ( const name of ['import', 'demand'] ) this.emitFile( {
@@ -238,7 +242,7 @@ export function browserAssetsPlugin( root ) {
 				}
 			}
 
-			for ( const [fileName, source] of runtime || runtimeFiles( root, true ) ) {
+			for ( const [fileName, source] of runtime || runtimeFiles( root, true, base ) ) {
 				// Rollup bundles the dedicated worker and its decoder graph for production.
 				if ( /^browser-runtime\/(import|demand)\.worker\.js$/.test( fileName ) ) {
 					continue;
@@ -254,7 +258,8 @@ export function browserAssetsPlugin( root ) {
 
 		configureServer( server ) {
 			const serve = ( request, response, next ) => {
-				const name = ( request.url || '' ).split( '?' )[0].slice( 1 );
+				const pathname = ( request.url || '' ).split( '?' )[0];
+				const name = pathname.startsWith( base ) ? pathname.slice( base.length ) : pathname.slice( 1 );
 				const data = runtime?.get( name );
 
 				if ( !data ) {
@@ -270,7 +275,7 @@ export function browserAssetsPlugin( root ) {
 
 			server.watcher.on( 'change', ( filename ) => {
 				if ( filename.startsWith( path.join( root, 'browser' ) ) ) {
-					runtime = runtimeFiles( root, false );
+					runtime = runtimeFiles( root, false, base );
 				}
 			} );
 		},

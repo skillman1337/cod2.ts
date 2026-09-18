@@ -10,6 +10,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../../../../common/asset_paths.js';
 import menuBgUrl from '@/assets/images/background_american_w.png?url';
 
 import { rgpu_menu_overlay_t } from '@/engine/common/types.js';
@@ -348,7 +349,7 @@ Asynchronously fetches and decodes the background artwork image bitmap.
 function RGPU_MenuBeginTextureLoad( epoch: rgpu_menu_epoch_t, serial: number ): void {
 	void ( async () => {
 		try {
-			const response = await fetch( MENU_BG_URL, { signal: epoch.signal } );
+			const response = await Asset_Fetch( MENU_BG_URL, { signal: epoch.signal } );
 
 			if ( !RGPU_MenuIsCurrent( epoch, serial ) ) {
 				return;

@@ -8,6 +8,8 @@
 ===============================================================================
 */
 
+import { APP_BASE, appURL } from './deployment.mjs';
+
 // ---------------------------------------------------------------------------
 // service worker coordination
 // ---------------------------------------------------------------------------
@@ -20,15 +22,17 @@ Ensures the local asset service worker is registered, active, and controlling th
 ====================
 */
 async function workerReady() {
-	await navigator.serviceWorker.register( '/local-assets.sw.js', {
+	const scriptURL = new URL( appURL( 'local-assets.sw.js' ), location.href ).href;
+	await navigator.serviceWorker.register( scriptURL, {
 		type: 'module',
-		scope: '/',
+		scope: APP_BASE,
 		updateViaCache: 'none',
 	} );
 
-	await navigator.serviceWorker.ready;
+	// A parent-scope worker must never satisfy this project's binding.
+	const controlsThisApp = () => navigator.serviceWorker.controller?.scriptURL === scriptURL;
 
-	if ( !navigator.serviceWorker.controller ) {
+	if ( !controlsThisApp() ) {
 		await new Promise( ( resolve, reject ) => {
 			const timeout = setTimeout( () => {
 				navigator.serviceWorker.removeEventListener( 'controllerchange', changed );
@@ -36,7 +40,7 @@ async function workerReady() {
 			}, 15000 );
 
 			function changed() {
-				if ( navigator.serviceWorker.controller ) {
+				if ( controlsThisApp() ) {
 					clearTimeout( timeout );
 					navigator.serviceWorker.removeEventListener( 'controllerchange', changed );
 					resolve();
@@ -129,11 +133,12 @@ export function watchEngine( ui, log ) {
 			for ( const entry of list.getEntries() ) {
 				const url = new URL( entry.name, location.href );
 
-				if ( url.origin !== location.origin || !/^\/(?:__cod2_local|assets|maps|viewmodels|characters|weaponfx|sound)\//.test( url.pathname ) ) {
+				const localPath = url.pathname.startsWith( APP_BASE ) ? '/' + url.pathname.slice( APP_BASE.length ) : '';
+				if ( url.origin !== location.origin || !/^\/(?:__cod2_local|assets|maps|viewmodels|characters|weaponfx|sound)\//.test( localPath ) ) {
 					continue;
 				}
 
-				const path = decodeURIComponent( url.pathname.replace( /^\/__cod2_local\/[^/]+\//, '' ).replace( /^\//, '' ) );
+				const path = decodeURIComponent( localPath.replace( /^\/__cod2_local\/[^/]+\//, '' ).replace( /^\//, '' ) );
 
 				assets++;
 				ui.task( { path, detail: `${assets} ASSETS READ` } );

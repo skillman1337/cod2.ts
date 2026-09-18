@@ -9,6 +9,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../../../../../common/asset_paths.js';
 import { MENU_MATERIAL_URLS } from './rgpu_menu_materials.js';
 import {
 	UI_ListScroll,
@@ -688,7 +689,7 @@ async function RGPU_MenuTextFetchBitmap(
 	epoch: rgpu_menu_epoch_t,
 	serial: number,
 ): Promise<ImageBitmap | null> {
-	const response = await fetch( url, { signal: epoch.signal } );
+	const response = await Asset_Fetch( url, { signal: epoch.signal } );
 
 	if ( !RGPU_MenuTextIsCurrent( epoch, serial ) ) {
 		return null;
@@ -725,7 +726,7 @@ function RGPU_MenuTextBeginLoad( epoch: rgpu_menu_epoch_t, serial: number ): voi
 
 			if ( epoch.supports_bc ) {
 				try {
-					const response = await fetch( MENU_FONT_BC3_URL, { signal: epoch.signal } );
+					const response = await Asset_Fetch( MENU_FONT_BC3_URL, { signal: epoch.signal } );
 
 					if ( response.ok && RGPU_MenuTextIsCurrent( epoch, serial ) ) {
 						const data = await response.arrayBuffer();

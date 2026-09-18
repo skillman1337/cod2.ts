@@ -20,7 +20,7 @@ import { performance } from 'node:perf_hooks';
 import { mapLimit } from '../async.mjs';
 
 const original = fs.readFileSync( new URL( '../main.mjs', import.meta.url ), 'utf8' );
-const lifecycle = fs.readFileSync( new URL( '../launcher-runtime.mjs', import.meta.url ), 'utf8' ).replace( /^export /gm, '' );
+const lifecycle = fs.readFileSync( new URL( '../launcher-runtime.mjs', import.meta.url ), 'utf8' ).replace( /^export /gm, '' ).replace( /^import .*;\n/gm, '' );
 const source = lifecycle + '\n' + original
 	.replace( /^import .*;\n/gm, '' )
 	.replace( "await import('../index.ts')", 'await __loadEngine()' )
@@ -58,7 +58,7 @@ Constructs a simulated browser context with mocked DOM elements,
 event targets, message channels, service worker, and storage hooks.
 ====================
 */
-function harness( { cache = true, saved = false, search = '', badJson = false } = {} ) {
+function harness( { cache = true, saved = false, search = '', badJson = false, base = '/' } = {} ) {
 	const calls = [];
 	const nodes = new Map();
 	const state = { hidden: false, error: null };
@@ -121,6 +121,8 @@ function harness( { cache = true, saved = false, search = '', badJson = false } 
 
 	const context = vm.createContext( {
 		window,
+		APP_BASE: base,
+		appURL: ( path = '' ) => base + path,
 		EventTarget,
 		URL,
 		URLSearchParams,
@@ -135,9 +137,9 @@ function harness( { cache = true, saved = false, search = '', badJson = false } 
 		isSecureContext: true,
 		console: { info() {}, error() {} },
 		location: {
-			pathname: '/',
+			pathname: base,
 			search,
-			href: 'https://game.test/' + search,
+			href: 'https://game.test' + base + search,
 			origin: 'https://game.test',
 			assign: ( path ) => calls.push( `navigate:${path}` ),
 		},
@@ -156,6 +158,7 @@ function harness( { cache = true, saved = false, search = '', badJson = false } 
 				ready: Promise.resolve(),
 				register: async () => calls.push( 'register-worker' ),
 				controller: {
+					scriptURL: 'https://game.test' + base + 'local-assets.sw.js',
 					postMessage( message, ports ) {
 						calls.push( `worker:${message.type}` );
 						ports?.[0].postMessage( { ok: true } );
@@ -209,6 +212,8 @@ function harness( { cache = true, saved = false, search = '', badJson = false } 
 		state,
 		el,
 		window,
+		APP_BASE: base,
+		appURL: ( path = '' ) => base + path,
 		done: context.bootDone,
 		signal( phase, message = phase ) {
 			window.dispatchEvent( new CustomEvent( 'cod2:engine-status', { detail: { phase, message } } ) );
@@ -302,4 +307,30 @@ test( 'quitting the game releases pointer lock and returns to cache management',
 	h.signal( 'quit' );
 	assert.ok( h.calls.includes( 'exit-pointer-lock' ) );
 	assert.ok( h.calls.includes( 'navigate:/?assets=manage' ) );
+} );
+
+
+test( 'project-site quit remains inside its deployment directory', async () => {
+	const h = harness( { cache: false, base: '/cod2.ts/' } );
+	await h.done;
+	h.signal( 'quit' );
+	assert.ok( h.calls.includes( 'navigate:/cod2.ts/?assets=manage' ) );
+} );
+
+
+test( 'project-site first visit reaches setup instead of rejecting its subpath', async () => {
+	const h = harness( { cache: false, base: '/cod2.ts/' } );
+	await h.done;
+	assert.equal( h.state.error, null );
+	assert.deepEqual( [...h.state.actions], ['choose'] );
+} );
+
+test( 'project-site cache boot and failed-engine retry preserve the deployment path', async () => {
+	const h = harness( { base: '/cod2.ts/' } );
+	await until( () => h.calls.includes( 'engine-imported' ) );
+	h.signal( 'error', 'Synthetic GPU error' );
+	await h.done;
+	assert.equal( h.state.error, 'Synthetic GPU error' );
+	await h.el( 'play' ).onclick();
+	assert.ok( h.calls.includes( 'navigate:/cod2.ts/' ) );
 } );

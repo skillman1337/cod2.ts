@@ -1,5 +1,7 @@
 # cod2.ts — Verification Protocol & Test Results
 
+> The GitHub/subpath pass has its own [current verification record](GITHUB-VERIFICATION.md). Counts and limitations below describe the earlier menu-first refactor, not the current CI result.
+
 ## Source-only checks
 
 ```sh
@@ -10,7 +12,7 @@ npm run build
 
 `verify` checks TypeScript, ownership boundaries, WebGPU ownership, execution annotations/map freshness, 31 architecture mutation cases, emitted local-worker dependency resolution and synthetic browser-loader contracts. These checks need no retail archives. The production build is **separate** and requires the pinned Vite dependency; a source-graph check is not a Vite/Rollup build.
 
-## Results from this implementation environment
+## Historical results from the menu-first refactor environment
 
 - Type checking passed using installed TypeScript **5.8.3**, not the pinned **5.9.3**. Recheck with `npm ci` on a normal networked machine/CI runner.
 - Loader tests: **117 passed, 1 skipped**. The suite is run sequentially to avoid resource contention between independent worker/format fixtures. The skip needs an optional external binary fixture. The passing set includes 18 tests around real import/demand-worker and service-worker handlers with simulated OPFS, IndexedDB, locks and client ports.

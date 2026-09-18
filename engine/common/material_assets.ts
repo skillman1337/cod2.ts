@@ -11,6 +11,7 @@
 */
 
 
+import { Asset_Fetch } from './asset_paths.js';
 import { Asset_MapJobs } from './asset_jobs.js';
 
 // ---------------------------------------------------------------------------
@@ -142,7 +143,7 @@ export async function Material_LoadImages(
 	optionalCatalogs: readonly string[],
 	report: ( message: string ) => void,
 	io: material_io_t = {
-		fetch: ( ...args ) => fetch( ...args ),
+		fetch: ( ...args ) => Asset_Fetch( ...args ),
 		decode: ( blob ) => createImageBitmap( blob ),
 	}
 ): Promise<( ImageBitmap | null )[]> {

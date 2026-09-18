@@ -9,6 +9,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from './asset_paths.js';
 import type { level_manifest_t } from './level.js';
 import mantleCurves from '@/assets/ui/mantle.json';
 
@@ -25,7 +26,7 @@ import mantleCurves from '@/assets/ui/mantle.json';
 export async function Level_LoadAssets( map: string ) {
 	if ( !/^[a-z0-9_][a-z0-9_-]*$/.test( map ) ) throw new Error( 'Invalid map name.' );
 	const base = '/maps/' + map + '/';
-	const response = await fetch( base + 'manifest.json' );
+	const response = await Asset_Fetch( base + 'manifest.json' );
 	if ( !response.ok ) throw new Error( 'Map manifest: ' + await response.text() );
 	const manifest = await response.json() as level_manifest_t;
 	manifest.name ??= ( manifest as any ).map ?? map;
@@ -36,13 +37,13 @@ export async function Level_LoadAssets( map: string ) {
 	manifest.nationalities ??= {};
 	manifest.sky ??= [];
 	if ( manifest.name !== map || manifest.vertex_stride !== 72 || !/^[a-z0-9_.-]+$/i.test( manifest.world ) ) throw new Error( 'Invalid map manifest.' );
-	const geometry = await fetch( base + manifest.world );
+	const geometry = await Asset_Fetch( base + manifest.world );
 	if ( !geometry.ok ) throw new Error( 'Map geometry: ' + await geometry.text() );
 	const vertices = await geometry.arrayBuffer();
 	manifest.vertices ??= vertices.byteLength / 72;
 	if ( !Number.isSafeInteger( manifest.vertices ) || manifest.vertices < 0 || vertices.byteLength !== manifest.vertices * 72 ) throw new Error( 'Truncated or misaligned map geometry.' );
 	if ( Object.keys( mantleCurves ).length === 0 ) {
-		const curves = await fetch( '/assets/gameplay/mantle.json' );
+		const curves = await Asset_Fetch( '/assets/gameplay/mantle.json' );
 		if ( !curves.ok ) throw new Error( 'Mantle metadata: ' + await curves.text() );
 		Object.assign( mantleCurves, await curves.json() );
 	}

@@ -11,10 +11,11 @@
 import { syntheticInstall, syntheticIwd, utf8 } from './helpers/synthetic.mjs';
 import { createDemandClient } from '../demand-client.mjs';
 import { bind } from '../launcher-runtime.mjs';
-import { generationRoot, commitGeneration, MENU_LAYOUT, writeFile, readFile, directory } from '/browser-runtime/storage.mjs';
-import { getSetting, putSetting } from '/browser-runtime/db.mjs';
-import { assetRoute } from '/browser-runtime/asset-routing.mjs';
-import { ensureUnit, readUnit, unitKey } from '/browser-runtime/demand-cache.mjs';
+import { APP_BASE, appURL } from '../deployment.mjs';
+import { generationRoot, commitGeneration, MENU_LAYOUT, writeFile, readFile, directory } from '../../browser-runtime/storage.mjs';
+import { getSetting, putSetting } from '../../browser-runtime/db.mjs';
+import { assetRoute } from '../../browser-runtime/asset-routing.mjs';
+import { ensureUnit, readUnit, unitKey } from '../../browser-runtime/demand-cache.mjs';
 
 const results = [];
 const check = ( ok, message ) => { if ( !ok ) throw new Error( message ); };
@@ -23,7 +24,7 @@ let client, imported;
 const tests = [];
 const test = ( name, run ) => tests.push( { name, run } );
 const asset = async ( path, options ) => {
-	const response = await fetch( path, options );
+	const response = await fetch( appURL( path.replace( /^\//, '' ) ), options );
 	if ( !response.ok ) throw new Error( `${path} (${response.status}): ${await response.text()}` );
 	return response;
 };
@@ -35,7 +36,7 @@ runImport
 */
 async function runImport() {
 	await generationRoot( id, true );
-	const worker = new Worker( '/browser-runtime/import.worker.js', { type: 'module' } );
+	const worker = new Worker( appURL( 'browser-runtime/import.worker.js' ), { type: 'module' } );
 	try {
 		return await new Promise( ( resolve, reject ) => {
 			worker.onerror = event => reject( new Error( event.message ) );
@@ -130,9 +131,9 @@ test( 'a cancelled conversion is never made active', async () => {
 } );
 
 test( 'single-flight queue coalesces same identity across two browsing contexts', async () => {
-	const frame = document.createElement( 'iframe' ); frame.src = '/empty.html'; document.body.append( frame );
+	const frame = document.createElement( 'iframe' ); frame.src = appURL( 'empty.html' ); document.body.append( frame );
 	await new Promise( resolve => frame.onload = resolve );
-	const script = `(async () => { const {ensureUnit}=await import('/browser-runtime/demand-cache.mjs'); const {writeFile}=await import('/browser-runtime/storage.mjs'); return ensureUnit(${JSON.stringify(id)},'sound/test/cross-context.wav',async (route,root)=>{await new Promise(r=>setTimeout(r,30));await writeFile(root,route.path,'one');return [{path:route.path,size:3}];});})()`;
+	const script = `(async () => { const {ensureUnit}=await import('${APP_BASE}browser-runtime/demand-cache.mjs'); const {writeFile}=await import('${APP_BASE}browser-runtime/storage.mjs'); return ensureUnit(${JSON.stringify(id)},'sound/test/cross-context.wav',async (route,root)=>{await new Promise(r=>setTimeout(r,30));await writeFile(root,route.path,'one');return [{path:route.path,size:3}];});})()`;
 	const [a,b] = await Promise.all( [eval( script ), frame.contentWindow.eval( script )] );
 	check( a.cached !== b.cached, 'both contexts compiled the same unit' );
 	frame.remove();
@@ -151,9 +152,9 @@ test( 'corrupt output is a miss; failed repair retains the last committed pointe
 } );
 
 test( 'missing media returns an explicit error without a server fallback', async () => {
-	const response = await fetch( '/assets/textures/not_in_install.png' );
+	const response = await fetch( appURL( 'assets/textures/not_in_install.png' ) );
 	check( !response.ok && /not_in_install/.test( await response.text() ), 'missing texture substituted' );
-	const stats = await ( await fetch( '/test-server-stats' ) ).json();
+	const stats = await ( await fetch( appURL( 'test-server-stats' ) ) ).json();
 	check( stats.mediaFallbacks === 0, `retail request reached network: ${stats.mediaFallbacks}` );
 } );
 
@@ -161,7 +162,7 @@ test( 'changed archive index refuses cold compilation for the old generation', a
 	client.close();
 	const changed = syntheticInstall(); changed['sound/test/replacement.wav'] = utf8( 'new' );
 	client = createDemandClient( id, { files: [{ path: 'main/synthetic.iwd', file: syntheticIwd( changed ) }] } );
-	const response = await fetch( '/sound/test/replacement.wav' );
+	const response = await fetch( appURL( 'sound/test/replacement.wav' ) );
 	check( !response.ok && /Archive index changed/.test( await response.text() ), 'mixed source generations' );
 } );
 
@@ -173,7 +174,7 @@ test( 'warm assets survive worker restart without any source-folder binding', as
 } );
 
 test( 'uncached content after restart explains missing source access', async () => {
-	const response = await fetch( '/sound/test/never-cached.wav' );
+	const response = await fetch( appURL( 'sound/test/never-cached.wav' ) );
 	check( response.status === 404 && /source binding/.test( await response.text() ), 'source error unclear' );
 } );
 
@@ -183,5 +184,5 @@ for ( const { name, run } of tests ) {
 	catch ( error ) { results.push( { name, passed: false, error: error.stack || String( error ) } ); }
 }
 client?.close();
-window.__demandResult = { tests: results.length, passed: results.filter( row => row.passed ).length, results };
+window.__demandResult = { base: APP_BASE, tests: results.length, passed: results.filter( row => row.passed ).length, results };
 document.body.append( document.createElement( 'pre' ) ).textContent = JSON.stringify( window.__demandResult, null, 2 );

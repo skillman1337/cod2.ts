@@ -10,6 +10,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../../../../common/asset_paths.js';
 import { Material_LoadImages } from '@/engine/common/material_assets.js';
 import { Cvar_Get } from '@/engine/common/cvar.js';
 import { Con_Printf } from '@/engine/common/common.js';
@@ -158,7 +159,7 @@ export function RGPU_ViewmodelPrepare( res: rgpu_draw_resources_t, upload: rgpu_
 
 	void ( async () => {
 		const json = async ( path: string ) => {
-			const r = await fetch( '/viewmodels/' + path );
+			const r = await Asset_Fetch( '/viewmodels/' + path );
 			if ( !r.ok ) {
 				throw new Error( path + ': ' + r.status );
 			}
@@ -208,7 +209,7 @@ export function RGPU_ViewmodelPrepare( res: rgpu_draw_resources_t, upload: rgpu_
 			return;
 		}
 
-		const lighting = await fetch( '/maps/' + map + '/lightgrid.json' )
+		const lighting = await Asset_Fetch( '/maps/' + map + '/lightgrid.json' )
 			.then( ( r ) => {
 				if ( !r.ok ) {
 					throw new Error( 'Missing light grid' );

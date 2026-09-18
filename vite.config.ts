@@ -12,6 +12,7 @@
 import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig, type UserConfig } from 'vite';
+import { normalizeBase } from './browser/deployment.mjs';
 import { browserAssetsPlugin } from './tools/build/browser_assets_plugin.mjs';
 import { movementTraceMiddleware } from './tools/debug/movement_trace_server.mjs';
 
@@ -34,6 +35,7 @@ function Vite_BuildRootConfig(): UserConfig {
 
 	const config: UserConfig = {} as UserConfig;
 	config.root = '.';
+	config.base = normalizeBase( process.env.COD2_BASE_PATH || '/' );
 	config.publicDir = false; // Never copy extracted proprietary assets into the site.
 	config.build = {
 		outDir: 'temp/dist',

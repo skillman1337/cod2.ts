@@ -46,7 +46,7 @@ Each unit is written under a new UUID, checked for declared file sizes, marked c
 
 Cross-tab Web Locks coalesce the same unit and exclude simultaneous import/deletion. The per-page worker queue runs one conversion job at a time to bound working memory; renderer fetch/decode fan-out is bounded separately. Whole selected maps still compile as map-sized jobs. This is **not** spatial cell streaming or a general predictive scheduler.
 
-Warm requests read browser storage without reopening the retail folder. Cold requests after a new visit may need a user gesture to renew read permission. The page broker owns that dialog; the service worker cannot prompt. Directory-upload fallback files are session snapshots, not persistent directory permission. The interface must not promise that all future uncached assets are accessible forever after a single click.
+Warm requests read browser storage without reopening the retail folder. Cold requests after a new visit may need a user gesture to renew read permission. The page broker owns that dialog; the service worker cannot prompt. The low-level importer can accept session file snapshots, but the current launcher exposes native directory access only; it has no upload-fallback UI. Session snapshots are not persistent directory permission. The interface must not promise that all future uncached assets are accessible forever after a single click.
 
 ## Engine integration
 

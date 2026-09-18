@@ -166,8 +166,7 @@ npm run build
 npm run preview -- --port 5173 --strictPort
 ```
 
-Serve at `/`, not a subdirectory. Using preview's usual different port creates a
-different storage origin and will not demonstrate reuse of the existing cache.
+The original UI pass required `/`. The current publication pass also supports a configured project path; see [GitHub setup](GITHUB-SETUP.md). Keep the same base, origin and browser profile when checking reuse of an existing cache. Using a different preview port creates a different storage origin.
 This cache is for converted game assets; this change does not add an offline
 app-shell installation.
 

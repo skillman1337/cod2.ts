@@ -1,0 +1,2 @@
+# Native-browser checks use Playwright's matching managed Chromium in CI.
+playwright==1.57.0

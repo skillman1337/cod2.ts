@@ -145,9 +145,12 @@ self.addEventListener( 'fetch', ( event ) => {
 		return;
 	}
 
-	const explicit = url.pathname.startsWith( '/__cod2_local/' );
-	const legacy = /^\/(assets|maps|viewmodels|characters|weaponfx|sound)\//.test( url.pathname )
-		|| /^\/(cod2|favicon)\.ico$/.test( url.pathname );
+	const scope = new URL( self.registration?.scope ?? '/', self.location.origin ).pathname;
+	if ( !url.pathname.startsWith( scope ) ) return;
+	const localPath = '/' + url.pathname.slice( scope.length );
+	const explicit = localPath.startsWith( '/__cod2_local/' );
+	const legacy = /^\/(assets|maps|viewmodels|characters|weaponfx|sound)\//.test( localPath )
+		|| /^\/(cod2|favicon)\.ico$/.test( localPath );
 
 	if ( !explicit && !legacy ) {
 		return;
@@ -155,7 +158,7 @@ self.addEventListener( 'fetch', ( event ) => {
 
 	event.respondWith( ( async () => {
 		try {
-			let path = decodeURIComponent( url.pathname.slice( 1 ) );
+			let path = decodeURIComponent( localPath.slice( 1 ) );
 			let id;
 
 			if ( explicit ) {

@@ -9,6 +9,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../../../../common/asset_paths.js';
 import { Cvar_Get } from '@/engine/common/cvar.js';
 import { Con_Printf } from '@/engine/common/common.js';
 import { Level_Generation, Level_Phase, Level_WorldVisible } from '@/engine/common/level.js';
@@ -121,7 +122,7 @@ export function RGPU_WeaponFXPrepare( res: rgpu_draw_resources_t, upload: rgpu_d
 	const ticket = epoch;
 
 	void ( async () => {
-		const response = await fetch( '/weaponfx/catalog.json' );
+		const response = await Asset_Fetch( '/weaponfx/catalog.json' );
 
 		if ( !response.ok ) {
 			throw new Error( 'weaponfx catalog ' + response.status );
@@ -132,7 +133,7 @@ export function RGPU_WeaponFXPrepare( res: rgpu_draw_resources_t, upload: rgpu_d
 			Object.entries( data.materials )
 				.filter( ( [, m] ) => m.file )
 				.map( async ( [name, m] ) => {
-					const r = await fetch( m.file!.startsWith( '/' ) ? m.file! : '/weaponfx/' + m.file );
+					const r = await Asset_Fetch( m.file!.startsWith( '/' ) ? m.file! : '/weaponfx/' + m.file );
 
 					if ( !r.ok ) {
 						throw new Error( m.file );

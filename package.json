@@ -1,5 +1,5 @@
 {
-  "name": "cod2-browser",
+  "name": "cod2.ts",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,12 +29,16 @@
     "bench:load": "node --import ./tools/build/register_ts.mjs tools/debug/benchmark_loader.mjs",
     "preview:ui": "node tools/build/export_setup_preview.mjs",
     "verify:ui": "python tools/tests/tooling/test_setup_ui.py",
-    "build:local": "npm run typecheck && npm run verify:browser && vite build",
+    "build:local": "npm run typecheck && npm run verify:browser && npm run build:bundle",
     "verify:legacy-build": "node tools/build/build_browser_modules.mjs --check",
     "audit:modules": "node tools/debug/audit_modules.mjs",
     "verify:demand-browser": "python tools/tests/tooling/test_demand_runtime.py",
     "verify:legacy-build-selftest": "node --no-warnings --experimental-vm-modules tools/tests/tooling/test_browser_build.mjs",
-    "verify:release": "node tools/verify/verify_release.mjs"
+    "verify:release": "node tools/verify/verify_release.mjs",
+    "build:bundle": "vite build && node tools/build/write_site_metadata.mjs",
+    "verify:site": "node tools/verify/verify_site.mjs",
+    "verify:docs": "node tools/verify/verify_docs.mjs",
+    "docs:map": "node tools/build/build_readme_map.mjs --write"
   },
   "devDependencies": {
     "typescript": "5.9.3",
@@ -44,5 +48,13 @@
   "license": "GPL-3.0-only",
   "engines": {
     "node": ">=22.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skillman1337/cod2.ts.git"
+  },
+  "homepage": "https://skillman1337.github.io/cod2.ts/",
+  "bugs": {
+    "url": "https://github.com/skillman1337/cod2.ts/issues"
   }
 }

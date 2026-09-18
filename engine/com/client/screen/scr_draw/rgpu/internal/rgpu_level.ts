@@ -10,6 +10,7 @@
 ===============================================================================
 */
 
+import { Asset_Fetch } from '../../../../../../common/asset_paths.js';
 import { Asset_LevelURL, Asset_MapJobs } from '../../../../../../common/asset_jobs.js';
 import { Level_Data, Level_GraphicsReady, Level_GraphicsProgress, Level_GraphicsFailed, type level_data_t } from '@/engine/common/level.js';
 import { Con_Printf } from '@/engine/common/common.js';
@@ -652,7 +653,7 @@ export function RGPU_LevelPrepare( res: rgpu_draw_resources_t, upload: rgpu_draw
 					let response: Response;
 
 					try {
-						response = await fetch( job.url );
+						response = await Asset_Fetch( job.url );
 					} catch {
 						response = new Response( null, { status: 404 } );
 					}
