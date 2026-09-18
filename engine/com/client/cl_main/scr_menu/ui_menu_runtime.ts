@@ -51,6 +51,7 @@ const ui_menu_registry = new Map<string, ui_menu_def_t>();
 const ui_menu_stack: string[] = [];
 const ui_menu_dvars: Record<string, string> = {
 	...retailDefaults,
+	cg_drawFPS: '1',
 	cl_ingame: '0',
 	cl_updateavailable: '0',
 	com_playerProfile: 'Player',
