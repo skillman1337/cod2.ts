@@ -12,7 +12,7 @@
 
 import { safePath } from './storage.mjs';
 
-export const COMPILER_VERSION = 1;
+export const COMPILER_VERSION = 2;
 
 /*
 ====================

@@ -30,6 +30,19 @@ export function normalizeBase( value = '/' ) {
 export const APP_BASE = normalizeBase( import.meta.env?.BASE_URL ?? '/' );
 export const STORAGE_SUFFIX = APP_BASE === '/' ? '' : '-' + encodeURIComponent( APP_BASE ).replaceAll( '%', '_' );
 
+export const BUILD_REVISION = typeof __BUILD_REVISION__ !== 'undefined'
+	? __BUILD_REVISION__
+	: ( import.meta.env?.VITE_BUILD_REVISION ?? null );
+
+export const BUILD_COMPILER_VERSION = typeof __BUILD_COMPILER_VERSION__ !== 'undefined'
+	? __BUILD_COMPILER_VERSION__
+	: null;
+
+export const BUILD_CACHE_VERSION = typeof __BUILD_CACHE_VERSION__ !== 'undefined'
+	? __BUILD_CACHE_VERSION__
+	: null;
+
+
 /*
 ====================
 appURL

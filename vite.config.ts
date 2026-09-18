@@ -13,6 +13,8 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig, type UserConfig } from 'vite';
 import { normalizeBase } from './browser/deployment.mjs';
+import { COMPILER_VERSION } from './browser/asset-routing.mjs';
+import { CACHE_VERSION } from './browser/storage.mjs';
 import { browserAssetsPlugin } from './tools/build/browser_assets_plugin.mjs';
 import { movementTraceMiddleware } from './tools/debug/movement_trace_server.mjs';
 
@@ -37,6 +39,11 @@ function Vite_BuildRootConfig(): UserConfig {
 	config.root = '.';
 	config.base = normalizeBase( process.env.COD2_BASE_PATH || '/' );
 	config.publicDir = false; // Never copy extracted proprietary assets into the site.
+	config.define = {
+		__BUILD_REVISION__: JSON.stringify( process.env.GITHUB_SHA || process.env.VITE_BUILD_REVISION || null ),
+		__BUILD_COMPILER_VERSION__: JSON.stringify( COMPILER_VERSION ),
+		__BUILD_CACHE_VERSION__: JSON.stringify( CACHE_VERSION ),
+	};
 	config.build = {
 		outDir: 'temp/dist',
 		assetsDir: 'app-code',

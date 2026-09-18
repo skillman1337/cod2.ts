@@ -10,7 +10,8 @@
 ===============================================================================
 */
 
-import { APP_BASE, appURL } from './deployment.mjs';
+import { APP_BASE, appURL, BUILD_REVISION } from './deployment.mjs';
+import { COMPILER_VERSION } from './asset-routing.mjs';
 import { bind, watchEngine } from './launcher-runtime.mjs';
 import { createDemandClient } from './demand-client.mjs';
 import { getSetting, putSetting, deleteSetting, transaction } from './db.mjs';
@@ -358,13 +359,17 @@ async function importFolder( handle ) {
 
 			await putSetting( `source:${id}`, { directory: handle, archives: installation.archives, sourceIndex } );
 			sessionFiles = installation.files;
+			const compilerVer = typeof COMPILER_VERSION === 'number' ? COMPILER_VERSION : 2;
 			await commitGeneration( id, {
 				layout: 'menu-first-v1',
+				compilerVersion: compilerVer,
+				buildRevision: typeof BUILD_REVISION !== 'undefined' ? BUILD_REVISION : null,
 				installationName: handle.name,
 				binaries: installation.binaries,
 				archives: installation.archives,
 				contentPolicy: 'menu-bootstrap-then-demand',
 			}, files );
+			await putSetting( 'compilerVersion', compilerVer );
 
 			cached = await activeGeneration();
 
@@ -523,10 +528,40 @@ byId( 'forget' ).onclick = async () => {
 
 /*
 ====================
+checkRemoteUpdate
+
+Probes build-info.json with cache-busting to detect if a newer release has been published.
+Returns remote build info or null if inaccessible or running.
+====================
+*/
+async function checkRemoteUpdate() {
+	if ( typeof fetch !== 'function' ) {
+		return null;
+	}
+
+	try {
+		const url = appURL( 'build-info.json?t=' + Date.now() );
+		const response = await fetch( url, {
+			cache: 'no-store',
+			headers: { 'Cache-Control': 'no-cache' },
+		} );
+
+		if ( !response.ok ) {
+			return null;
+		}
+
+		return await response.json();
+	} catch {
+		return null;
+	}
+}
+
+/*
+====================
 boot
 
 Verifies environment prerequisites (HTTPS/localhost, OPFS, Service Workers, Web Locks),
-checks active cache generation, and auto-launches if cache is validated and healthy.
+checks active cache generation, probes for published updates, and auto-launches if cache is healthy.
 ====================
 */
 async function boot() {
@@ -545,17 +580,61 @@ async function boot() {
 	ui.begin( 'check' );
 	mark( 'cache-check-start' );
 
-	[saved, cached] = await Promise.all( [
+	const [savedDir, activeGen, savedCompilerVer, remoteUpdate] = await Promise.all( [
 		getSetting( 'directory' ),
 		activeGeneration( {
 			onProgress: ( { path, done, total } ) => ui.task( { path, detail: `${done} / ${total} FILES CHECKED` } ),
 		} ),
+		getSetting( 'compilerVersion' ),
+		checkRemoteUpdate(),
 	] );
+
+	saved = savedDir;
+	cached = activeGen;
 
 	mark( 'cache-check-end' );
 	measure( 'cache-validation', 'cache-check-start', 'cache-check-end' );
 
 	const manage = new URLSearchParams( location.search ).get( 'assets' ) === 'manage';
+
+	// Detect if a newer code revision was deployed to the server
+	if ( remoteUpdate?.revision && typeof BUILD_REVISION === 'string' && remoteUpdate.revision !== BUILD_REVISION ) {
+		navigator.serviceWorker?.getRegistration?.().then( ( reg ) => reg?.update?.() );
+		const sessionKey = 'cod2:reloaded:' + remoteUpdate.revision;
+		if ( typeof sessionStorage !== 'undefined' && !sessionStorage.getItem( sessionKey ) ) {
+			sessionStorage.setItem( sessionKey, '1' );
+			location.reload();
+			return;
+		}
+	}
+
+	// Detect if cached assets were compiled with an outdated compiler version
+	const currentCompilerVersion = typeof COMPILER_VERSION === 'number' ? COMPILER_VERSION : 2;
+	const cacheCompilerVersion = cached?.manifest?.compilerVersion ?? savedCompilerVer;
+	const cacheOutdated = Boolean( saved && cached && cacheCompilerVersion !== undefined && cacheCompilerVersion < currentCompilerVersion );
+
+	if ( cacheOutdated ) {
+		log( `Local cache compiler version (${cacheCompilerVersion}) is older than current (${currentCompilerVersion}).` );
+		if ( !manage && typeof saved.queryPermission === 'function' ) {
+			try {
+				const permission = await saved.queryPermission( { mode: 'read' } );
+				if ( permission === 'granted' ) {
+					ui.stage( 'Updating local cache for new version…', { label: 'UPDATE', step: 'import' } );
+					await importFolder( saved );
+					return;
+				}
+			} catch ( err ) {
+				log( `Auto-update permission check: ${err.message}` );
+			}
+		}
+
+		cached = null;
+		ready( 'A game update is available. Click to update your local cache with the latest fixes.' );
+		if ( byId( 'resume' )?.firstChild ) {
+			byId( 'resume' ).firstChild.textContent = 'Update local cache ';
+		}
+		return;
+	}
 
 	if ( cached && !manage ) {
 		await play( cached );

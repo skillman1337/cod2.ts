@@ -18,6 +18,8 @@ import vm from 'node:vm';
 import { performance } from 'node:perf_hooks';
 
 import { mapLimit } from '../async.mjs';
+import { COMPILER_VERSION } from '../asset-routing.mjs';
+import { BUILD_REVISION } from '../deployment.mjs';
 
 const original = fs.readFileSync( new URL( '../main.mjs', import.meta.url ), 'utf8' );
 const lifecycle = fs.readFileSync( new URL( '../launcher-runtime.mjs', import.meta.url ), 'utf8' ).replace( /^export /gm, '' ).replace( /^import .*;\n/gm, '' );
@@ -58,7 +60,7 @@ Constructs a simulated browser context with mocked DOM elements,
 event targets, message channels, service worker, and storage hooks.
 ====================
 */
-function harness( { cache = true, saved = false, search = '', badJson = false, base = '/' } = {} ) {
+function harness( { cache = true, saved = false, search = '', badJson = false, base = '/', compilerVersion = COMPILER_VERSION, permissionGranted = false, remoteRevision = null, buildRevision = null } = {} ) {
 	const calls = [];
 	const nodes = new Map();
 	const state = { hidden: false, error: null };
@@ -114,7 +116,7 @@ function harness( { cache = true, saved = false, search = '', badJson = false, b
 	const snapshot = new File( [badJson ? '{broken' : '{"ok":true}'], 'table.json' );
 	const generation = cache
 		? {
-			manifest: { id: '12345678-1234-1234-1234-123456789abc' },
+			manifest: { id: '12345678-1234-1234-1234-123456789abc', compilerVersion },
 			verified: new Map( [['assets/ui/table.json', snapshot]] ),
 		}
 		: null;
@@ -142,6 +144,7 @@ function harness( { cache = true, saved = false, search = '', badJson = false, b
 			href: 'https://game.test' + base + search,
 			origin: 'https://game.test',
 			assign: ( path ) => calls.push( `navigate:${path}` ),
+			reload: () => calls.push( 'location-reload' ),
 		},
 		document: {
 			createElement: () => ( {} ),
@@ -179,17 +182,37 @@ function harness( { cache = true, saved = false, search = '', badJson = false, b
 				return measures.has( name ) ? [measures.get( name )] : [];
 			},
 		},
-		getSetting: async () => (
-			saved
-				? {
-					requestPermission() {
-						calls.push( 'permission-requested' );
-						return Promise.resolve( 'granted' );
-					},
-				}
-				: null
-		),
+		getSetting: async ( key ) => {
+			if ( key === 'directory' ) {
+				return saved
+					? {
+						name: 'Call of Duty 2',
+						requestPermission() {
+							calls.push( 'permission-requested' );
+							return Promise.resolve( 'granted' );
+						},
+						...( permissionGranted ? { queryPermission: async () => 'granted' } : {} ),
+					}
+					: null;
+			}
+			if ( key === 'compilerVersion' ) {
+				return compilerVersion;
+			}
+			return null;
+		},
+		fetch: remoteRevision
+			? async () => ( {
+				ok: true,
+				json: async () => ( { revision: remoteRevision, compilerVersion: COMPILER_VERSION, cacheVersion: 5 } ),
+			} )
+			: undefined,
+		sessionStorage: {
+			getItem: () => null,
+			setItem: ( key, val ) => calls.push( `sessionStorage:${key}=${val}` ),
+		},
 		activeGeneration: async () => generation,
+		COMPILER_VERSION,
+		BUILD_REVISION: buildRevision ?? BUILD_REVISION,
 		JSON_FILES: ['assets/ui/table.json'],
 		CACHE_FOLDER: 'test',
 		mapLimit,
@@ -333,4 +356,22 @@ test( 'project-site cache boot and failed-engine retry preserve the deployment p
 	assert.equal( h.state.error, 'Synthetic GPU error' );
 	await h.el( 'play' ).onclick();
 	assert.ok( h.calls.includes( 'navigate:/cod2.ts/' ) );
+} );
+
+test( 'outdated cache compiler version prompts user to update local cache', async () => {
+	const h = harness( { cache: true, saved: true, compilerVersion: 1 } );
+	await h.done;
+
+	assert.ok( !h.calls.includes( 'engine-imported' ) );
+	assert.ok( h.state.actions.includes( 'resume' ) );
+	assert.ok( h.el( 'resume' ).firstChild.textContent.includes( 'Update local cache' ) );
+	assert.ok( h.state.ready.message.includes( 'A game update is available' ) );
+} );
+
+test( 'newer remote build revision triggers reload of the launcher', async () => {
+	const h = harness( { cache: false, saved: false, buildRevision: 'local-sha-00000', remoteRevision: 'newer-commit-sha-99999' } );
+	await h.done;
+
+	assert.ok( h.calls.includes( 'location-reload' ) );
+	assert.ok( h.calls.includes( 'sessionStorage:cod2:reloaded:newer-commit-sha-99999=1' ) );
 } );

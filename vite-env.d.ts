@@ -18,6 +18,11 @@ interface ImportMeta {
 	readonly hot?: ImportMetaHot;
 }
 
+declare const __BUILD_REVISION__: string | null;
+declare const __BUILD_COMPILER_VERSION__: number;
+declare const __BUILD_CACHE_VERSION__: number;
+
+
 declare module '*?url' {
 	const url: string;
 	export default url;

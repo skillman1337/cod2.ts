@@ -12,6 +12,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normalizeBase } from '../../browser/deployment.mjs';
+import { COMPILER_VERSION } from '../../browser/asset-routing.mjs';
+import { CACHE_VERSION } from '../../browser/storage.mjs';
 
 const root = fileURLToPath( new URL( '../../', import.meta.url ) );
 const dist = path.join( root, 'temp/dist' );
@@ -23,6 +25,7 @@ if ( repository && !/^[a-z0-9_.-]+\/[a-z0-9_.-]+$/i.test( repository ) ) throw n
 if ( revision && !/^[a-f0-9]{40}$/i.test( revision ) ) throw new Error( 'Invalid source revision.' );
 const info = {
 	project: 'cod2.ts', base, revision,
+	compilerVersion: COMPILER_VERSION, cacheVersion: CACHE_VERSION,
 	source: repository && revision ? `https://github.com/${repository}/tree/${revision}` : null,
 	license: 'GPL-3.0-only', retailAssetsIncluded: false,
 };

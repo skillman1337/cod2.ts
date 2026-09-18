@@ -23,11 +23,34 @@ Ensures the local asset service worker is registered, active, and controlling th
 */
 async function workerReady() {
 	const scriptURL = new URL( appURL( 'local-assets.sw.js' ), location.href ).href;
-	await navigator.serviceWorker.register( scriptURL, {
+	const registration = await navigator.serviceWorker.register( scriptURL, {
 		type: 'module',
 		scope: APP_BASE,
 		updateViaCache: 'none',
 	} );
+
+	// Actively trigger byte-by-byte update check on the server
+	if ( registration && typeof registration.update === 'function' ) {
+		registration.update().catch( () => {} );
+	}
+
+	// If an updated worker is already waiting, tell it to take over
+	if ( registration?.waiting && navigator.serviceWorker.controller ) {
+		registration.waiting.postMessage( { type: 'cod2-skip-waiting' } );
+	}
+
+	// Listen for any new worker discovered during this session
+	if ( registration && typeof registration.addEventListener === 'function' ) {
+		registration.addEventListener( 'updatefound', () => {
+			const installingWorker = registration.installing;
+			if ( !installingWorker ) return;
+			installingWorker.addEventListener( 'statechange', () => {
+				if ( installingWorker.state === 'installed' && navigator.serviceWorker.controller ) {
+					installingWorker.postMessage( { type: 'cod2-skip-waiting' } );
+				}
+			} );
+		} );
+	}
 
 	// A parent-scope worker must never satisfy this project's binding.
 	const controlsThisApp = () => navigator.serviceWorker.controller?.scriptURL === scriptURL;
@@ -51,6 +74,18 @@ async function workerReady() {
 			changed();
 		} );
 	}
+}
+
+let refreshing = false;
+if ( typeof navigator !== 'undefined' && navigator.serviceWorker && typeof navigator.serviceWorker.addEventListener === 'function' ) {
+	navigator.serviceWorker.addEventListener( 'controllerchange', () => {
+		if ( refreshing ) return;
+		if ( typeof window !== 'undefined' && !window.__cod2EngineRunning && !window.__cod2Reloading ) {
+			refreshing = true;
+			window.__cod2Reloading = true;
+			window.location?.reload?.();
+		}
+	} );
 }
 
 /*
@@ -117,9 +152,19 @@ export function watchEngine( ui, log ) {
 		const info = event.detail;
 
 		if ( info?.phase === 'ready' ) {
+			if ( typeof window !== 'undefined' ) {
+				window.__cod2EngineRunning = true;
+			}
 			resolve();
 		} else if ( info?.phase === 'error' ) {
+			if ( typeof window !== 'undefined' ) {
+				window.__cod2EngineRunning = false;
+			}
 			reject( new Error( info.message ) );
+		} else if ( info?.phase === 'quit' ) {
+			if ( typeof window !== 'undefined' ) {
+				window.__cod2EngineRunning = false;
+			}
 		} else if ( info?.message ) {
 			ui.stage( info.message, { label: 'GRAPHICS', step: 'launch', cached: true } );
 			log( info.message );

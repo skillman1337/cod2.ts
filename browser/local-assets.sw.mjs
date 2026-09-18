@@ -115,6 +115,11 @@ self.addEventListener( 'message', ( event ) => {
 		return;
 	}
 
+	if ( event.data?.type === 'cod2-skip-waiting' || event.data?.type === 'SKIP_WAITING' ) {
+		self.skipWaiting();
+		return;
+	}
+
 	if ( event.data?.type !== 'cod2-bind' || !event.source?.id ) {
 		return;
 	}
