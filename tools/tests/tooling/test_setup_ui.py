@@ -33,7 +33,16 @@ class DossierUI(unittest.TestCase):
         subprocess.run(['node', str(ROOT / 'tools/build/export_setup_preview.mjs'), str(target)], check=True, capture_output=True)
         cls.html = target.read_text()
         cls.pw = sync_playwright().start()
-        executable = shutil.which('chromium') or shutil.which('chromium-browser')
+        executable = shutil.which('chromium') or shutil.which('chromium-browser') or shutil.which('chrome')
+        if not executable and os.name == 'nt':
+            for candidate in [
+                r'C:\Program Files\Google\Chrome\Application\chrome.exe',
+                r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
+                r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',
+            ]:
+                if os.path.isfile(candidate):
+                    executable = candidate
+                    break
         options = {'headless': True, 'args': ['--no-sandbox']}
         if executable and not os.environ.get('CI'):
             options['executable_path'] = executable

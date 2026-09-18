@@ -185,4 +185,6 @@ for ( const { name, run } of tests ) {
 }
 client?.close();
 window.__demandResult = { base: APP_BASE, tests: results.length, passed: results.filter( row => row.passed ).length, results };
-document.body.append( document.createElement( 'pre' ) ).textContent = JSON.stringify( window.__demandResult, null, 2 );
+const pre = document.createElement( 'pre' );
+pre.textContent = JSON.stringify( window.__demandResult, null, 2 );
+document.body.append( pre );

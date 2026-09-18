@@ -40,7 +40,16 @@ def main() -> int:
             raise RuntimeError('Harness server did not provide its local URL')
         with sync_playwright() as p:
             options = {'headless': True, 'args': ['--no-sandbox']}
-            executable = shutil.which('chromium') or shutil.which('chromium-browser')
+            executable = shutil.which('chromium') or shutil.which('chromium-browser') or shutil.which('chrome')
+            if not executable and sys.platform == 'win32':
+                for candidate in [
+                    r'C:\Program Files\Google\Chrome\Application\chrome.exe',
+                    r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
+                    r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',
+                ]:
+                    if os.path.isfile(candidate):
+                        executable = candidate
+                        break
             if executable and not os.environ.get('CI'):
                 options['executable_path'] = executable
             browser = p.chromium.launch(**options)
