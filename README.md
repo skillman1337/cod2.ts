@@ -8,8 +8,6 @@ An experimental **TypeScript + WebGPU** client for your own **Call of Duty 2** i
 
 [🧭 Architecture](docs/OPERATIONS-MAP.md) · [🚧 Compatibility](docs/COMPATIBILITY.md) · [☕ Support](https://ko-fi.com/skillman1337)
 
-</div>
-
 > 🚧 **Work in progress.** Weapons, GSC, animations, rendering and game modes have known gaps. This is not a finished retail-compatible port.
 
 ## 🚀 Run locally
