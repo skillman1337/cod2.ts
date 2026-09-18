@@ -41,7 +41,7 @@
     "docs:map": "node tools/build/build_readme_map.mjs --write"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vite": "6.4.3"
   },
   "description": "Experimental menu-first, local-file Call of Duty 2 browser client",
