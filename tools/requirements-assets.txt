@@ -1,0 +1,4 @@
+Pillow>=10,<13
+numpy>=1.26,<3
+# Imported by the offline native-data readers.
+pefile

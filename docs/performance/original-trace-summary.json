@@ -1,0 +1,204 @@
+{
+  "recordingWindowSeconds": 36.575248,
+  "recordingStartedUTC": "2026-09-17T23:39:38.919Z",
+  "eventCount": 569291,
+  "networkThrottling": "Net",
+  "networkThrottlingConditions": {
+    "download": 5000000,
+    "upload": -1,
+    "latency": 80,
+    "packetLoss": 1,
+    "packetQueueLength": 0,
+    "packetReordering": false,
+    "key": "USER_CUSTOM_SETTING_1"
+  },
+  "timingCaution": "Recording duration is not a measured time-to-menu. Slice categories can overlap; do not sum them into a wall-clock breakdown.",
+  "slices": [
+    {
+      "thread": "CrBrowserMain",
+      "pid": 44324,
+      "tid": 37796,
+      "name": "RunTask",
+      "seconds": 1.335354,
+      "count": 60885
+    },
+    {
+      "thread": "PerfettoTrace",
+      "pid": 44324,
+      "tid": 40124,
+      "name": "RunTask",
+      "seconds": 0.017539,
+      "count": 431
+    },
+    {
+      "thread": "PerfettoTrace",
+      "pid": 22572,
+      "tid": 1664,
+      "name": "RunTask",
+      "seconds": 0.004223,
+      "count": 188
+    },
+    {
+      "thread": "ServiceWorker thread",
+      "pid": 39344,
+      "tid": 58732,
+      "name": "RunTask",
+      "seconds": 0.409286,
+      "count": 4985
+    },
+    {
+      "thread": "CrRendererMain",
+      "pid": 39344,
+      "tid": 21264,
+      "name": "RunTask",
+      "seconds": 1.735039,
+      "count": 19561
+    },
+    {
+      "thread": "PerfettoTrace",
+      "pid": 39344,
+      "tid": 57804,
+      "name": "RunTask",
+      "seconds": 0.007707,
+      "count": 238
+    },
+    {
+      "thread": "CrGpuMain",
+      "pid": 22572,
+      "tid": 41068,
+      "name": "RunTask",
+      "seconds": 4.00272,
+      "count": 8219
+    },
+    {
+      "thread": "Chrome_IOThread",
+      "pid": 44324,
+      "tid": 32972,
+      "name": "RunTask",
+      "seconds": 2.092921,
+      "count": 191510
+    },
+    {
+      "thread": "VizCompositorThread",
+      "pid": 22572,
+      "tid": 42812,
+      "name": "RunTask",
+      "seconds": 0.614786,
+      "count": 14099
+    },
+    {
+      "thread": "GpuVSyncThread",
+      "pid": 22572,
+      "tid": 41816,
+      "name": "RunTask",
+      "seconds": 13.017737,
+      "count": 3269
+    },
+    {
+      "thread": "ThreadPoolServiceThread",
+      "pid": 44324,
+      "tid": 6636,
+      "name": "RunTask",
+      "seconds": 0.060702,
+      "count": 97
+    },
+    {
+      "thread": "Compositor",
+      "pid": 39344,
+      "tid": 53112,
+      "name": "RunTask",
+      "seconds": 0.376633,
+      "count": 14683
+    },
+    {
+      "thread": "Chrome_ChildIOThread",
+      "pid": 39344,
+      "tid": 56264,
+      "name": "RunTask",
+      "seconds": 0.060241,
+      "count": 8338
+    },
+    {
+      "thread": "MemoryInfra",
+      "pid": 44324,
+      "tid": 44884,
+      "name": "RunTask",
+      "seconds": 0.001115,
+      "count": 39
+    },
+    {
+      "thread": "Chrome_ChildIOThread",
+      "pid": 22572,
+      "tid": 50120,
+      "name": "RunTask",
+      "seconds": 0.029906,
+      "count": 2788
+    },
+    {
+      "thread": "ThreadPoolServiceThread",
+      "pid": 39344,
+      "tid": 48676,
+      "name": "RunTask",
+      "seconds": 0.000638,
+      "count": 12
+    },
+    {
+      "thread": "Chrome_DevToolsADBThread",
+      "pid": 44324,
+      "tid": 54428,
+      "name": "RunTask",
+      "seconds": 0.012412,
+      "count": 98
+    },
+    {
+      "thread": "DedicatedWorker thread",
+      "pid": 39344,
+      "tid": 15800,
+      "name": "RunTask",
+      "seconds": 16.044877,
+      "count": 40095
+    },
+    {
+      "thread": "DedicatedWorker thread",
+      "pid": 39344,
+      "tid": 15800,
+      "name": "DecompressionStream Inflate",
+      "seconds": 0.540339,
+      "count": 5664
+    },
+    {
+      "thread": "DedicatedWorker thread",
+      "pid": 39344,
+      "tid": 15800,
+      "name": "CompressionStream Deflate",
+      "seconds": 8.38632,
+      "count": 890
+    },
+    {
+      "thread": "CacheThread_BlockFile",
+      "pid": 44324,
+      "tid": 25348,
+      "name": "RunTask",
+      "seconds": 0.00015,
+      "count": 5
+    },
+    {
+      "thread": "GpuWatchdog",
+      "pid": 22572,
+      "tid": 54004,
+      "name": "RunTask",
+      "seconds": 0.000116,
+      "count": 2
+    }
+  ],
+  "requestLandmarks": [
+    {
+      "path": "/browser-runtime/retail-pipeline.js",
+      "requestedAtSeconds": 2.850321
+    },
+    {
+      "path": "/index.ts",
+      "requestedAtSeconds": 31.008901
+    }
+  ]
+}

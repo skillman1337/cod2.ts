@@ -1,0 +1,48 @@
+{
+  "name": "cod2-browser",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit --pretty false",
+    "exec:map": "node tools/verify/generate_execution_map.mjs --write",
+    "exec:check": "npm run verify:execution && npm run verify:map",
+    "verify:ownership": "node tools/verify/verify_ownership.mjs",
+    "verify:physics": "npm run build:modules && node tools/tests/native/test_retail_physics.mjs && node tools/tests/native/test_retail_collision.mjs && node tools/tests/native/test_retail_steps.mjs && node tools/tests/native/test_capsule_collision.mjs && node tools/tests/native/test_retail_brush.mjs && node tools/tests/native/test_retail_landing.mjs && node tools/tests/native/test_retail_lean.mjs && node tools/tests/native/test_retail_stance.mjs && node tools/tests/native/test_mantle.mjs && node tools/tests/native/test_retail_ladder.mjs",
+    "verify:movement-recording": "npm run build:modules && node tools/tests/runtime/test_movement_recording.mjs && node tools/tests/runtime/test_input_transitions.mjs",
+    "verify:movement-audio": "npm run build:modules && node tools/tests/native/test_retail_sound_choice.mjs",
+    "verify:webgpu": "node tools/verify/verify_webgpu_architecture.mjs",
+    "verify:execution": "node tools/verify/verify_execution.mjs",
+    "verify:map": "node tools/verify/generate_execution_map.mjs --check",
+    "verify:selftest": "node tools/tests/tooling/test_verification.mjs",
+    "verify:build": "node --no-warnings --experimental-vm-modules tools/verify/verify_local_runtime.mjs",
+    "verify:build-selftest": "node --no-warnings --experimental-vm-modules tools/tests/tooling/test_browser_build.mjs",
+    "verify:lifecycle": "node tools/tests/runtime/test_webgpu_lifecycle.mjs",
+    "verify": "npm run typecheck && npm run verify:ownership && npm run verify:webgpu && npm run exec:check && npm run verify:selftest && npm run verify:build && npm run verify:browser",
+    "build:modules": "node tools/build/build_browser_modules.mjs",
+    "smoke:modules": "node --no-warnings --experimental-vm-modules tools/tests/tooling/smoke_browser_modules.mjs",
+    "build:vite": "npm run build:local",
+    "build": "npm run build:local",
+    "verify:browser": "node --test-concurrency=1 --import ./tools/build/register_ts.mjs --test browser/tests/*.test.mjs",
+    "test:reorg": "node --no-warnings --experimental-vm-modules tools/tests/tooling/test_reorganization.mjs",
+    "preview": "vite preview",
+    "bench:load": "node --import ./tools/build/register_ts.mjs tools/debug/benchmark_loader.mjs",
+    "preview:ui": "node tools/build/export_setup_preview.mjs",
+    "verify:ui": "python tools/tests/tooling/test_setup_ui.py",
+    "build:local": "npm run typecheck && npm run verify:browser && vite build",
+    "verify:legacy-build": "node tools/build/build_browser_modules.mjs --check",
+    "audit:modules": "node tools/debug/audit_modules.mjs",
+    "verify:demand-browser": "python tools/tests/tooling/test_demand_runtime.py",
+    "verify:legacy-build-selftest": "node --no-warnings --experimental-vm-modules tools/tests/tooling/test_browser_build.mjs",
+    "verify:release": "node tools/verify/verify_release.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vite": "6.4.3"
+  },
+  "description": "Experimental menu-first, local-file Call of Duty 2 browser client",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=22.16.0"
+  }
+}

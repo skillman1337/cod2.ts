@@ -1,0 +1,1794 @@
+{
+  "schemaVersion": 1,
+  "commands": [
+    {
+      "id": "assets/export_dynamic_lightgrid",
+      "path": "assets/export_dynamic_lightgrid.py",
+      "runtime": "python",
+      "aliases": [
+        "export_dynamic_lightgrid",
+        "export_dynamic_lightgrid.py"
+      ],
+      "description": "Export dynamic lightgrid",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_exe_icon",
+      "path": "assets/extract_exe_icon.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_exe_icon",
+        "extract_exe_icon.py"
+      ],
+      "description": "Preserve executable RT_GROUP_ICON images in a multi-resolution ICO.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_lightmap_weights",
+      "path": "assets/extract_lightmap_weights.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_lightmap_weights",
+        "extract_lightmap_weights.py"
+      ],
+      "description": "Capture the fixed weight lookup for renderer lightmap weighting.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_menu_materials",
+      "path": "assets/extract_menu_materials.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_menu_materials",
+        "extract_menu_materials.py"
+      ],
+      "description": "Decode menu material color maps from the installed archives, preserving alpha.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_movement_audio",
+      "path": "assets/extract_movement_audio.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_movement_audio",
+        "extract_movement_audio.py"
+      ],
+      "description": "Retail surface alias families registered at 0x4bf9c2 and event dispatch 0x4e0910.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_playermodels",
+      "path": "assets/extract_playermodels.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_playermodels",
+        "extract_playermodels.py"
+      ],
+      "description": "Extract third-person player character bodies, heads, helmets, materials, and animations.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_audio",
+      "path": "assets/extract_retail_audio.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_audio",
+        "extract_retail_audio.py"
+      ],
+      "description": "Export startup ambient aliases referenced by retail MP map scripts.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_dvars",
+      "path": "assets/extract_retail_dvars.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_dvars",
+        "extract_retail_dvars.py"
+      ],
+      "description": "Recover literal dvar registrations from executable instructions or bundled database.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_fonts",
+      "path": "assets/extract_retail_fonts.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_fonts",
+        "extract_retail_fonts.py"
+      ],
+      "description": "Extract the retail menu glyph tables without altering the shared atlas.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_hud",
+      "path": "assets/extract_retail_hud.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_hud",
+        "extract_retail_hud.py"
+      ],
+      "description": "Compile retail HUD owner-draw definitions and weapon data providers.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_mantle",
+      "path": "assets/extract_retail_mantle.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_mantle",
+        "extract_retail_mantle.py"
+      ],
+      "description": "Export authored mantle volumes and v14 root-motion translation channels.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_map",
+      "path": "assets/extract_retail_map.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_map",
+        "extract_retail_map.py"
+      ],
+      "description": "Extract a retail IBSP v4 world mesh, entities and material images.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_menus",
+      "path": "assets/extract_retail_menus.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_menus",
+        "extract_retail_menus.py"
+      ],
+      "description": "Compile installed retail menu data; no hand-written title-only substitutes.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_retail_stance",
+      "path": "assets/extract_retail_stance.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_retail_stance",
+        "extract_retail_stance.py"
+      ],
+      "description": "View-height/forward-shift tables selected by 0x517440 and sampled by 0x5172d0.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_viewmodels",
+      "path": "assets/extract_viewmodels.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_viewmodels",
+        "extract_viewmodels.py"
+      ],
+      "description": "Extract all selected bullet weapon viewmodels and authored animation channels.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/extract_weapon_effects",
+      "path": "assets/extract_weapon_effects.py",
+      "runtime": "python",
+      "aliases": [
+        "extract_weapon_effects",
+        "extract_weapon_effects.py"
+      ],
+      "description": "Export authored retail EFX graphs, impact dispatch table and material bindings.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "assets/setup_assets",
+      "path": "assets/setup_assets.py",
+      "runtime": "python",
+      "aliases": [
+        "setup_assets",
+        "setup_assets.py"
+      ],
+      "description": "Build browser assets from a user's retail CoD2 installation (never modifies it).",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "build/build_browser_modules",
+      "path": "build/build_browser_modules.mjs",
+      "runtime": "node",
+      "aliases": [
+        "build_browser_modules",
+        "build_browser_modules.mjs"
+      ],
+      "description": "Build browser modules",
+      "requirements": [
+        "Node.js (project version)"
+      ],
+      "notes": [
+        "LOCAL-ONLY builder: copies extracted retail assets. Do not use its output as the asset-free website deployment."
+      ]
+    },
+    {
+      "id": "build/package_source",
+      "path": "build/package_source.py",
+      "runtime": "python",
+      "aliases": [
+        "package_source",
+        "package_source.py"
+      ],
+      "description": "Create a source-only ZIP with a byte-accurate hash manifest; no root game assets.",
+      "requirements": [
+        "Python 3.10+"
+      ],
+      "notes": []
+    },
+    {
+      "id": "debug/analyze_load_trace",
+      "path": "debug/analyze_load_trace.py",
+      "runtime": "python",
+      "aliases": [
+        "analyze_load_trace",
+        "analyze_load_trace.py"
+      ],
+      "description": "Summarize Chrome trace timings without treating nested slices as additive.",
+      "requirements": [
+        "Python 3.10+"
+      ],
+      "notes": []
+    },
+    {
+      "id": "debug/benchmark_loader",
+      "path": "debug/benchmark_loader.mjs",
+      "runtime": "node",
+      "aliases": [
+        "benchmark_loader",
+        "benchmark_loader.mjs"
+      ],
+      "description": "Synthetic PNG encoding microbenchmark in Node.",
+      "requirements": [
+        "Node.js (project version)"
+      ],
+      "notes": []
+    },
+    {
+      "id": "debug/check_live_movement_receiver",
+      "path": "debug/check_live_movement_receiver.mjs",
+      "runtime": "node",
+      "aliases": [
+        "check_live_movement_receiver",
+        "check_live_movement_receiver.mjs"
+      ],
+      "description": "Check live movement receiver",
+      "requirements": [
+        "Node.js (project version)"
+      ],
+      "notes": []
+    },
+    {
+      "id": "debug/inspect_ladder_recording",
+      "path": "debug/inspect_ladder_recording.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_ladder_recording",
+        "inspect_ladder_recording.py"
+      ],
+      "description": "Inspect ladder recording",
+      "requirements": [
+        "Python 3.10+"
+      ],
+      "notes": []
+    },
+    {
+      "id": "debug/replay_movement",
+      "path": "debug/replay_movement.mjs",
+      "runtime": "node",
+      "aliases": [
+        "replay_movement",
+        "replay_movement.mjs"
+      ],
+      "description": "Replay movement",
+      "requirements": [
+        "Node.js (project version)"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_bsp",
+      "path": "inspect/assets/inspect_bsp.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_bsp",
+        "inspect_bsp.py"
+      ],
+      "description": "Inspect bsp",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_door_surfaces",
+      "path": "inspect/assets/inspect_door_surfaces.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_door_surfaces",
+        "inspect_door_surfaces.py"
+      ],
+      "description": "Inspect door surfaces",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_hud_items",
+      "path": "inspect/assets/inspect_hud_items.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_hud_items",
+        "inspect_hud_items.py"
+      ],
+      "description": "Inspect hud items",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_iwi_pixels",
+      "path": "inspect/assets/inspect_iwi_pixels.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_iwi_pixels",
+        "inspect_iwi_pixels.py"
+      ],
+      "description": "Inspect iwi pixels",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_landing_aliases",
+      "path": "inspect/assets/inspect_landing_aliases.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_landing_aliases",
+        "inspect_landing_aliases.py"
+      ],
+      "description": "Inspect landing aliases",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_lightgrid",
+      "path": "inspect/assets/inspect_lightgrid.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_lightgrid",
+        "inspect_lightgrid.py"
+      ],
+      "description": "Inspect lightgrid",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_map_assets",
+      "path": "inspect/assets/inspect_map_assets.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_map_assets",
+        "inspect_map_assets.py"
+      ],
+      "description": "Inspect map assets",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_material_states",
+      "path": "inspect/assets/inspect_material_states.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_material_states",
+        "inspect_material_states.py"
+      ],
+      "description": "Capture original renderer state lowering; substitute only D3D SetRenderState.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_model_pose",
+      "path": "inspect/assets/inspect_model_pose.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_model_pose",
+        "inspect_model_pose.py"
+      ],
+      "description": "Decode model surfaces by executing the original renderer loader in isolation.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_movement_audio",
+      "path": "inspect/assets/inspect_movement_audio.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_movement_audio",
+        "inspect_movement_audio.py"
+      ],
+      "description": "Inspect movement audio",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_pixel_material",
+      "path": "inspect/assets/inspect_pixel_material.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_pixel_material",
+        "inspect_pixel_material.py"
+      ],
+      "description": "Find world surfaces beneath a recorded browser pixel for material diagnosis.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_retail_asset",
+      "path": "inspect/assets/inspect_retail_asset.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_asset",
+        "inspect_retail_asset.py"
+      ],
+      "description": "Read the effective installed asset without changing retail archives.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_shader_assets",
+      "path": "inspect/assets/inspect_shader_assets.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_shader_assets",
+        "inspect_shader_assets.py"
+      ],
+      "description": "Inspect shader assets",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_viewmodel_assets",
+      "path": "inspect/assets/inspect_viewmodel_assets.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_viewmodel_assets",
+        "inspect_viewmodel_assets.py"
+      ],
+      "description": "Audit shared gun/hand skeleton names and authored idle channels before renderer integration.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_viewmodel_pose",
+      "path": "inspect/assets/inspect_viewmodel_pose.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_viewmodel_pose",
+        "inspect_viewmodel_pose.py"
+      ],
+      "description": "Inspect viewmodel pose",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/inspect_weapon_effects",
+      "path": "inspect/assets/inspect_weapon_effects.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_weapon_effects",
+        "inspect_weapon_effects.py"
+      ],
+      "description": "Inspect weapon effects",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": []
+    },
+    {
+      "id": "inspect/assets/xanim",
+      "path": "inspect/assets/xanim.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_xanim",
+        "inspect_xanim.py"
+      ],
+      "description": "Inspect animation channels using the shared v14 decoder, including flip flags and root delta.",
+      "requirements": [
+        "Python 3.10+",
+        "Game IWD archives"
+      ],
+      "notes": [
+        "Writes inspection JSON under artifacts by default."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_fx_depth",
+      "path": "inspect/native/inspect_fx_depth.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_fx_depth",
+        "inspect_fx_depth.py"
+      ],
+      "description": "Inspect fx depth",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_fx_tail",
+      "path": "inspect/native/inspect_fx_tail.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_fx_tail",
+        "inspect_fx_tail.py"
+      ],
+      "description": "Inspect fx tail",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_hud_native",
+      "path": "inspect/native/inspect_hud_native.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_hud_native",
+        "inspect_hud_native.py"
+      ],
+      "description": "Read HUD registration constants and strings from the original PE, not pseudo-code.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_level_flow",
+      "path": "inspect/native/inspect_level_flow.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_level_flow",
+        "inspect_level_flow.py"
+      ],
+      "description": "Inspect level flow",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_renderer",
+      "path": "inspect/native/inspect_renderer.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_renderer",
+        "inspect_renderer.py"
+      ],
+      "description": "Inspect renderer",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_renderer_strings",
+      "path": "inspect/native/inspect_renderer_strings.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_renderer_strings",
+        "inspect_renderer_strings.py"
+      ],
+      "description": "Inspect renderer strings",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_brush",
+      "path": "inspect/native/inspect_retail_brush.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_brush",
+        "inspect_retail_brush.py"
+      ],
+      "description": "Execute the complete original 0x41bf10 brush trace on bounded fixtures.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_bullet_spread",
+      "path": "inspect/native/inspect_retail_bullet_spread.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_bullet_spread",
+        "inspect_retail_bullet_spread.py"
+      ],
+      "description": "Run original spread endpoint code with controlled CRT-rand boundary samples.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_capsule",
+      "path": "inspect/native/inspect_retail_capsule.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_capsule",
+        "inspect_retail_capsule.py"
+      ],
+      "description": "Bounded original triangle-face sweeps with disabled edge/vertex features.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_fog",
+      "path": "inspect/native/inspect_retail_fog.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_fog",
+        "inspect_retail_fog.py"
+      ],
+      "description": "Freeze world shader and execute the original fog color selection with a D3D boundary.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_fx_sequence",
+      "path": "inspect/native/inspect_retail_fx_sequence.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_fx_sequence",
+        "inspect_retail_fx_sequence.py"
+      ],
+      "description": "Freeze candidate, execute original atlas initialization/update at renderer API boundary.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_ladder",
+      "path": "inspect/native/inspect_retail_ladder.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_ladder",
+        "inspect_retail_ladder.py"
+      ],
+      "description": "Frozen candidate, bounded original machine movement before collision submission.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_landing",
+      "path": "inspect/native/inspect_retail_landing.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_landing",
+        "inspect_retail_landing.py"
+      ],
+      "description": "Inspect retail landing",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_lean",
+      "path": "inspect/native/inspect_retail_lean.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_lean",
+        "inspect_retail_lean.py"
+      ],
+      "description": "Execute original lean timing block and full camera translation helper.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_physics",
+      "path": "inspect/native/inspect_retail_physics.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_physics",
+        "inspect_retail_physics.py"
+      ],
+      "description": "Execute frozen movement helper cases in the original PE. No engine calls replaced.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_shot_origin",
+      "path": "inspect/native/inspect_retail_shot_origin.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_shot_origin",
+        "inspect_retail_shot_origin.py"
+      ],
+      "description": "Execute the lean and minimum-height block in retail's firing eye helper.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_sound_choice",
+      "path": "inspect/native/inspect_retail_sound_choice.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_sound_choice",
+        "inspect_retail_sound_choice.py"
+      ],
+      "description": "Execute complete original alias selector with synthetic lists and explicit RNG state.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_stance",
+      "path": "inspect/native/inspect_retail_stance.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_stance",
+        "inspect_retail_stance.py"
+      ],
+      "description": "Original complete 0x5172d0 table interpolator; all integer-percent branches.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_steps",
+      "path": "inspect/native/inspect_retail_steps.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_steps",
+        "inspect_retail_steps.py"
+      ],
+      "description": "Original-machine step arithmetic and camera cases; bounded blocks, not whole Pmove.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_tail_endpoint",
+      "path": "inspect/native/inspect_retail_tail_endpoint.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_tail_endpoint",
+        "inspect_retail_tail_endpoint.py"
+      ],
+      "description": "Freeze the tail candidate and capture the original endpoint routine, including zero motion.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_tail_vertices",
+      "path": "inspect/native/inspect_retail_tail_vertices.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_tail_vertices",
+        "inspect_retail_tail_vertices.py"
+      ],
+      "description": "Capture original tail draw vertices, including atlas UVs and both renderer paths.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_viewmodel_depth",
+      "path": "inspect/native/inspect_retail_viewmodel_depth.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_viewmodel_depth",
+        "inspect_retail_viewmodel_depth.py"
+      ],
+      "description": "Execute the original render-flag dispatch and capture D3D viewport depth ranges.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_weapon_layers",
+      "path": "inspect/native/inspect_retail_weapon_layers.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_weapon_layers",
+        "inspect_retail_weapon_layers.py"
+      ],
+      "description": "Verify the ADS-layer dispatch preceding every ordinary weapon animation.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_retail_weapon_motion",
+      "path": "inspect/native/inspect_retail_weapon_motion.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_retail_weapon_motion",
+        "inspect_retail_weapon_motion.py"
+      ],
+      "description": "Post-freeze bounded validation against original weapon recoil and light-grid machine code.",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_weapon_bob_constants",
+      "path": "inspect/native/inspect_weapon_bob_constants.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_weapon_bob_constants",
+        "inspect_weapon_bob_constants.py"
+      ],
+      "description": "Inspect weapon bob constants",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_weapon_reload",
+      "path": "inspect/native/inspect_weapon_reload.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_weapon_reload",
+        "inspect_weapon_reload.py"
+      ],
+      "description": "Inspect weapon reload",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/inspect_weapon_strings",
+      "path": "inspect/native/inspect_weapon_strings.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_weapon_strings",
+        "inspect_weapon_strings.py"
+      ],
+      "description": "Inspect weapon strings",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/menu_dispatch_evidence",
+      "path": "inspect/native/menu_dispatch_evidence.py",
+      "runtime": "python",
+      "aliases": [
+        "menu_dispatch_evidence",
+        "menu_dispatch_evidence.py"
+      ],
+      "description": "Menu dispatch evidence",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/read_menu_evidence",
+      "path": "inspect/native/read_menu_evidence.py",
+      "runtime": "python",
+      "aliases": [
+        "read_menu_evidence",
+        "read_menu_evidence.py"
+      ],
+      "description": "Read menu evidence",
+      "requirements": [
+        "Python 3.10+",
+        "Supported Windows reference binaries for this probe; install requirements-native.txt as needed"
+      ],
+      "notes": [
+        "Reference addresses and assertions are version-specific; relocation is not support for another binary version."
+      ]
+    },
+    {
+      "id": "inspect/native/weapon_fields",
+      "path": "inspect/native/weapon_fields.py",
+      "runtime": "python",
+      "aliases": [
+        "inspect_weapon_fields",
+        "inspect_weapon_fields.py",
+        "inspect_weapon_flash_fields",
+        "inspect_weapon_flash_fields.py",
+        "inspect_weapon_transition_fields",
+        "inspect_weapon_transition_fields.py"
+      ],
+      "aliasArguments": {
+        "inspect_weapon_fields": [
+          "--preset",
+          "general"
+        ],
+        "inspect_weapon_fields.py": [
+          "--preset",
+          "general"
+        ],
+        "inspect_weapon_flash_fields": [
+          "--preset",
+          "flash"
+        ],
+        "inspect_weapon_flash_fields.py": [
+          "--preset",
+          "flash"
+        ],
+        "inspect_weapon_transition_fields": [
+          "--preset",
+          "transition"
+        ],
+        "inspect_weapon_transition_fields.py": [
+          "--preset",
+          "transition"
+        ]
+      },
+      "description": "Inspect one native weapon field table with general, flash, transition, or all presets.",
+      "requirements": [
+        "Python 3.10+",
+        "pefile",
+        "Supported Windows reference EXE"
+      ],
+      "notes": [
+        "Original addresses and field filters retained; --contains overrides a preset."
+      ]
+    },
+    {
+      "id": "maintenance/refresh_retail_collision_bevels",
+      "path": "maintenance/refresh_retail_collision_bevels.py",
+      "runtime": "python",
+      "aliases": [
+        "refresh_retail_collision_bevels",
+        "refresh_retail_collision_bevels.py"
+      ],
+      "description": "Complete all exported triangle prisms without changing their native face planes.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "maintenance/refresh_retail_collision_flags",
+      "path": "maintenance/refresh_retail_collision_flags.py",
+      "runtime": "python",
+      "aliases": [
+        "refresh_retail_collision_flags",
+        "refresh_retail_collision_flags.py"
+      ],
+      "description": "Restore native brush-side material flags to existing exports without rebuilding models.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "maintenance/refresh_retail_collision_triangles",
+      "path": "maintenance/refresh_retail_collision_triangles.py",
+      "runtime": "python",
+      "aliases": [
+        "refresh_retail_collision_triangles",
+        "refresh_retail_collision_triangles.py"
+      ],
+      "description": "Preserve native triangle vertices for capsule contact instead of closed prisms.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "maintenance/refresh_retail_material_states",
+      "path": "maintenance/refresh_retail_material_states.py",
+      "runtime": "python",
+      "aliases": [
+        "refresh_retail_material_states",
+        "refresh_retail_material_states.py"
+      ],
+      "description": "Refresh compiled render states without re-decoding unchanged model geometry.",
+      "requirements": [
+        "Python 3.10+",
+        "Locally owned game files or extracted assets, depending on command; requirements-assets.txt"
+      ],
+      "notes": [
+        "May create/replace extracted output files; run only against a development checkout."
+      ]
+    },
+    {
+      "id": "tests/native/test_bullet_spread",
+      "path": "tests/native/test_bullet_spread.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_bullet_spread",
+        "test_bullet_spread.mjs"
+      ],
+      "description": "Test bullet spread",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_capsule_collision",
+      "path": "tests/native/test_capsule_collision.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_capsule_collision",
+        "test_capsule_collision.mjs"
+      ],
+      "description": "Test capsule collision",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_ladder_pose",
+      "path": "tests/native/test_ladder_pose.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_ladder_pose",
+        "test_ladder_pose.mjs"
+      ],
+      "description": "Test ladder pose",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_lean_shooting",
+      "path": "tests/native/test_lean_shooting.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_lean_shooting",
+        "test_lean_shooting.mjs"
+      ],
+      "description": "Test lean shooting",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_mantle",
+      "path": "tests/native/test_mantle.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_mantle",
+        "test_mantle.mjs"
+      ],
+      "description": "Test mantle",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_brush",
+      "path": "tests/native/test_retail_brush.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_brush",
+        "test_retail_brush.mjs"
+      ],
+      "description": "Test retail brush",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_collision",
+      "path": "tests/native/test_retail_collision.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_collision",
+        "test_retail_collision.mjs"
+      ],
+      "description": "Test retail collision",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_ladder",
+      "path": "tests/native/test_retail_ladder.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_ladder",
+        "test_retail_ladder.mjs"
+      ],
+      "description": "Test retail ladder",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_landing",
+      "path": "tests/native/test_retail_landing.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_landing",
+        "test_retail_landing.mjs"
+      ],
+      "description": "Test retail landing",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_lean",
+      "path": "tests/native/test_retail_lean.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_lean",
+        "test_retail_lean.mjs"
+      ],
+      "description": "Test retail lean",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_physics",
+      "path": "tests/native/test_retail_physics.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_physics",
+        "test_retail_physics.mjs"
+      ],
+      "description": "Test retail physics",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_sound_choice",
+      "path": "tests/native/test_retail_sound_choice.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_sound_choice",
+        "test_retail_sound_choice.mjs"
+      ],
+      "description": "Test retail sound choice",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_stance",
+      "path": "tests/native/test_retail_stance.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_stance",
+        "test_retail_stance.mjs"
+      ],
+      "description": "Test retail stance",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_steps",
+      "path": "tests/native/test_retail_steps.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_steps",
+        "test_retail_steps.mjs"
+      ],
+      "description": "Test retail steps",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_retail_weapons",
+      "path": "tests/native/test_retail_weapons.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_weapons",
+        "test_retail_weapons.mjs"
+      ],
+      "description": "Test retail weapons",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_tail_vertices",
+      "path": "tests/native/test_tail_vertices.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_tail_vertices",
+        "test_tail_vertices.mjs"
+      ],
+      "description": "Test tail vertices",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_weapon_branches",
+      "path": "tests/native/test_weapon_branches.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_weapon_branches",
+        "test_weapon_branches.mjs"
+      ],
+      "description": "Test weapon branches",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/native/test_weapon_transitions",
+      "path": "tests/native/test_weapon_transitions.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_weapon_transitions",
+        "test_weapon_transitions.mjs"
+      ],
+      "description": "Test weapon transitions",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/runtime/test_character_pipeline",
+      "path": "tests/runtime/test_character_pipeline.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_character_pipeline",
+        "test_character_pipeline.mjs"
+      ],
+      "description": "Test character pipeline",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/runtime/test_input_transitions",
+      "path": "tests/runtime/test_input_transitions.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_input_transitions",
+        "test_input_transitions.mjs"
+      ],
+      "description": "Test input transitions",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/runtime/test_movement_recording",
+      "path": "tests/runtime/test_movement_recording.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_movement_recording",
+        "test_movement_recording.mjs"
+      ],
+      "description": "Test movement recording",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/runtime/test_retail_fps",
+      "path": "tests/runtime/test_retail_fps.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_retail_fps",
+        "test_retail_fps.mjs"
+      ],
+      "description": "Test retail fps",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/runtime/test_webgpu_lifecycle",
+      "path": "tests/runtime/test_webgpu_lifecycle.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_webgpu_lifecycle",
+        "test_webgpu_lifecycle.mjs"
+      ],
+      "description": "Test webgpu lifecycle",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/tooling/smoke_browser_modules",
+      "path": "tests/tooling/smoke_browser_modules.mjs",
+      "runtime": "node",
+      "aliases": [
+        "smoke_browser_modules",
+        "smoke_browser_modules.mjs"
+      ],
+      "description": "Smoke browser modules",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": [],
+      "nodeArguments": [
+        "--experimental-vm-modules"
+      ]
+    },
+    {
+      "id": "tests/tooling/test_browser_build",
+      "path": "tests/tooling/test_browser_build.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_browser_build",
+        "test_browser_build.mjs"
+      ],
+      "description": "Test browser build",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": [],
+      "nodeArguments": [
+        "--experimental-vm-modules"
+      ]
+    },
+    {
+      "id": "tests/tooling/test_movement_trace_server",
+      "path": "tests/tooling/test_movement_trace_server.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_movement_trace_server",
+        "test_movement_trace_server.mjs"
+      ],
+      "description": "Test movement trace server",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/tooling/test_reorganization",
+      "path": "tests/tooling/test_reorganization.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_reorganization",
+        "test_reorganization.mjs"
+      ],
+      "description": "Synthetic regression checks for the tools reorganization.",
+      "requirements": [
+        "Node + project TypeScript dependency"
+      ],
+      "notes": [
+        "No retail assets or running game required."
+      ],
+      "nodeArguments": [
+        "--experimental-vm-modules"
+      ]
+    },
+    {
+      "id": "tests/tooling/test_verification",
+      "path": "tests/tooling/test_verification.mjs",
+      "runtime": "node",
+      "aliases": [
+        "test_verification",
+        "test_verification.mjs"
+      ],
+      "description": "Test verification",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project and test-specific extracted assets/captures; see source before running"
+      ],
+      "notes": []
+    },
+    {
+      "id": "verify/generate_execution_map",
+      "path": "verify/generate_execution_map.mjs",
+      "runtime": "node",
+      "aliases": [
+        "generate_execution_map",
+        "generate_execution_map.mjs"
+      ],
+      "description": "Generate execution map",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project metadata and dependencies; some checks need extracted assets"
+      ],
+      "notes": []
+    },
+    {
+      "id": "verify/verify_execution",
+      "path": "verify/verify_execution.mjs",
+      "runtime": "node",
+      "aliases": [
+        "verify_execution",
+        "verify_execution.mjs"
+      ],
+      "description": "Verify execution",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project metadata and dependencies; some checks need extracted assets"
+      ],
+      "notes": []
+    },
+    {
+      "id": "verify/verify_ownership",
+      "path": "verify/verify_ownership.mjs",
+      "runtime": "node",
+      "aliases": [
+        "verify_ownership",
+        "verify_ownership.mjs"
+      ],
+      "description": "Verify ownership",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project metadata and dependencies; some checks need extracted assets"
+      ],
+      "notes": []
+    },
+    {
+      "id": "verify/verify_retail_font_evidence",
+      "path": "verify/verify_retail_font_evidence.py",
+      "runtime": "python",
+      "aliases": [
+        "verify_retail_font_evidence",
+        "verify_retail_font_evidence.py"
+      ],
+      "description": "Validate the bounded UI_FONT_NORMAL selector against original x86 bytes.",
+      "requirements": [
+        "Python 3.10+",
+        "Full project metadata and dependencies; some checks need extracted assets"
+      ],
+      "notes": []
+    },
+    {
+      "id": "verify/verify_webgpu_architecture",
+      "path": "verify/verify_webgpu_architecture.mjs",
+      "runtime": "node",
+      "aliases": [
+        "verify_webgpu_architecture",
+        "verify_webgpu_architecture.mjs"
+      ],
+      "description": "Verify webgpu architecture",
+      "requirements": [
+        "Node.js (project version)",
+        "Full project metadata and dependencies; some checks need extracted assets"
+      ],
+      "notes": []
+    },
+    {
+      "id": "build/export_setup_preview",
+      "path": "build/export_setup_preview.mjs",
+      "runtime": "node",
+      "aliases": [
+        "export_setup_preview",
+        "export_setup_preview.mjs"
+      ],
+      "description": "Export setup preview as self-contained HTML.",
+      "requirements": [
+        "Node.js (project version)"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tests/tooling/test_setup_ui",
+      "path": "tests/tooling/test_setup_ui.py",
+      "runtime": "python",
+      "aliases": [
+        "test_setup_ui",
+        "test_setup_ui.py"
+      ],
+      "description": "Real Chromium checks of the exported setup view.",
+      "requirements": [
+        "Python 3.10+",
+        "Playwright"
+      ],
+      "notes": []
+    }
+  ]
+}

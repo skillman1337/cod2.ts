@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-18",
+  "node": "22.16.0",
+  "typescript_tested": "5.8.3",
+  "typescript_pinned": "5.9.3",
+  "typecheck": "passed",
+  "ownership": "passed",
+  "webgpu_architecture": "passed",
+  "execution_contracts": "passed",
+  "execution_map": "passed",
+  "architecture_mutations": {
+    "passed": 31
+  },
+  "local_runtime_emission": {
+    "files": 40,
+    "import_edges": 80,
+    "virtual_asset_imports": 37,
+    "status": "passed",
+    "is_production_vite_build": false
+  },
+  "loader_tests": {
+    "passed": 117,
+    "skipped": 1,
+    "failed": 0,
+    "mode": "standalone sequential Node run"
+  },
+  "actual_worker_service_worker_handler_tests": {
+    "passed": 18,
+    "storage_and_ports": "simulated; not a native browser"
+  },
+  "aggregate_npm_verify": "timed out at loader suite; standalone component checks passed; aggregate not verified",
+  "production_build": "unverified: pinned dependency installation blocked by registry DNS/network access",
+  "native_browser_demand": "unverified: ERR_BLOCKED_BY_ADMINISTRATOR for local harness navigation",
+  "launcher_dom_suite": "unverified: execution timeout",
+  "real_retail_assets": "not supplied as complete IWD archives; no end-to-end retail test or performance measurement",
+  "legacy_offline_build_selftest": "failed due to missing extracted retail assets; separate from source CI",
+  "reference_binary": "static named-call inspection only; binary and instruction stream excluded",
+  "license": "GPL-3.0-only code policy; provenance review required; no retail-asset license granted"
+}

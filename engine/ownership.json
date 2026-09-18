@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "root": "engine/com/com.ts",
+  "modules": {
+    "engine/com/com.ts": "index.ts",
+    "engine/com/cmd/cmd.ts": "engine/com/com.ts",
+    "engine/com/client/cl_main.ts": "engine/com/com.ts",
+    "engine/com/server/sv_main.ts": "engine/com/com.ts",
+    "engine/com/host/host.ts": "engine/com/com.ts",
+    "engine/com/net/net.ts": "engine/com/com.ts",
+
+    "engine/com/client/cl_main/cl_state.ts": "engine/com/client/cl_main.ts",
+    "engine/com/client/cl_main/scr_menu.ts": "engine/com/client/cl_main.ts",
+    "engine/com/client/input/input.ts": "engine/com/client/cl_main.ts",
+    "engine/com/client/usercmd/usercmd.ts": "engine/com/client/cl_main.ts",
+    "engine/com/client/sound/sound.ts": "engine/com/client/cl_main.ts",
+    "engine/com/client/screen/scr_draw.ts": "engine/com/client/cl_main.ts",
+
+    "engine/com/client/cl_main/scr_menu/ui_menu_runtime.ts": "engine/com/client/cl_main/scr_menu.ts",
+    "engine/com/client/cl_main/scr_menu/mp_main_menu/menus.ts": "engine/com/client/cl_main/scr_menu/ui_menu_runtime.ts",
+
+    "engine/com/client/screen/scr_draw/r_webgpu.ts": "engine/com/client/screen/scr_draw.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_init.ts": "engine/com/client/screen/scr_draw/r_webgpu.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_surface.ts": "engine/com/client/screen/scr_draw/r_webgpu.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_frame.ts": "engine/com/client/screen/scr_draw/r_webgpu.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts": "engine/com/client/screen/scr_draw/r_webgpu.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/rgpu_menu.ts": "engine/com/client/screen/scr_draw/r_webgpu.ts"
+  },
+  "internals": {
+    "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_character.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts",
+    "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_weaponfx.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts",
+    "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_viewmodel.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts",
+    "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_draw_contract.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts",
+    "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_level.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/internal/rgpu_menu_materials.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/rgpu_menu.ts",
+    "engine/com/client/cl_main/scr_menu/mp_main_menu/internal/menu_def.ts": "engine/com/client/cl_main/scr_menu/mp_main_menu/menus.ts",
+    "engine/com/client/cl_main/scr_menu/mp_main_menu/internal/menu_strings.ts": "engine/com/client/cl_main/scr_menu/mp_main_menu/menus.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/internal/rgpu_menu_contract.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/rgpu_menu.ts",
+    "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/internal/rgpu_menu_text.ts": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/rgpu_menu.ts"
+  }
+}

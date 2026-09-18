@@ -1,0 +1,914 @@
+[
+  {
+    "path": "engine/com/client/cl_main/scr_menu/ui_menu_runtime.ts",
+    "lines": 1640,
+    "imports": 13,
+    "dynamicImports": 0,
+    "bytes": 44626,
+    "review": true
+  },
+  {
+    "path": "engine/common/pm.ts",
+    "lines": 1564,
+    "imports": 16,
+    "dynamicImports": 0,
+    "bytes": 40279,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/internal/rgpu_menu_text.ts",
+    "lines": 1454,
+    "imports": 15,
+    "dynamicImports": 0,
+    "bytes": 37281,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_draw.ts",
+    "lines": 1365,
+    "imports": 8,
+    "dynamicImports": 0,
+    "bytes": 31472,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/r_webgpu.ts",
+    "lines": 1276,
+    "imports": 11,
+    "dynamicImports": 0,
+    "bytes": 34183,
+    "review": true
+  },
+  {
+    "path": "browser/decoders/retail-iwi.ts",
+    "lines": 1092,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 30178,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_level.ts",
+    "lines": 1018,
+    "imports": 8,
+    "dynamicImports": 0,
+    "bytes": 29728,
+    "review": true
+  },
+  {
+    "path": "engine/common/character.ts",
+    "lines": 991,
+    "imports": 5,
+    "dynamicImports": 0,
+    "bytes": 25422,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/sound/sound.ts",
+    "lines": 833,
+    "imports": 7,
+    "dynamicImports": 0,
+    "bytes": 19036,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_character.ts",
+    "lines": 825,
+    "imports": 12,
+    "dynamicImports": 0,
+    "bytes": 30944,
+    "review": true
+  },
+  {
+    "path": "browser/decoders/retail-bsp.ts",
+    "lines": 819,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 25235,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw.ts",
+    "lines": 815,
+    "imports": 7,
+    "dynamicImports": 0,
+    "bytes": 17524,
+    "review": true
+  },
+  {
+    "path": "engine/com/client/input/input.ts",
+    "lines": 742,
+    "imports": 6,
+    "dynamicImports": 0,
+    "bytes": 16741,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/cl_main/scr_menu.ts",
+    "lines": 734,
+    "imports": 11,
+    "dynamicImports": 0,
+    "bytes": 19686,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-menus.ts",
+    "lines": 626,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 16308,
+    "review": false
+  },
+  {
+    "path": "engine/com/server/sv_main.ts",
+    "lines": 615,
+    "imports": 8,
+    "dynamicImports": 0,
+    "bytes": 13840,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/rgpu_menu.ts",
+    "lines": 584,
+    "imports": 7,
+    "dynamicImports": 0,
+    "bytes": 15367,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/cl_main.ts",
+    "lines": 580,
+    "imports": 19,
+    "dynamicImports": 0,
+    "bytes": 16990,
+    "review": true
+  },
+  {
+    "path": "engine/common/weapon_fx.ts",
+    "lines": 574,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 15268,
+    "review": false
+  },
+  {
+    "path": "browser/main.mjs",
+    "lines": 572,
+    "imports": 9,
+    "dynamicImports": 1,
+    "bytes": 16020,
+    "review": false
+  },
+  {
+    "path": "engine/common/weapon.ts",
+    "lines": 558,
+    "imports": 5,
+    "dynamicImports": 0,
+    "bytes": 15081,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_weaponfx.ts",
+    "lines": 544,
+    "imports": 9,
+    "dynamicImports": 0,
+    "bytes": 16579,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-model.ts",
+    "lines": 538,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 14351,
+    "review": false
+  },
+  {
+    "path": "engine/common/cg_draw.ts",
+    "lines": 530,
+    "imports": 5,
+    "dynamicImports": 0,
+    "bytes": 11784,
+    "review": false
+  },
+  {
+    "path": "browser/storage.mjs",
+    "lines": 523,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 13893,
+    "review": false
+  },
+  {
+    "path": "browser/setup-view.mjs",
+    "lines": 508,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 18195,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_viewmodel.ts",
+    "lines": 481,
+    "imports": 10,
+    "dynamicImports": 0,
+    "bytes": 13960,
+    "review": false
+  },
+  {
+    "path": "engine/com/com.ts",
+    "lines": 470,
+    "imports": 11,
+    "dynamicImports": 0,
+    "bytes": 9995,
+    "review": false
+  },
+  {
+    "path": "engine/common/weapon_motion.ts",
+    "lines": 463,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 13111,
+    "review": false
+  },
+  {
+    "path": "engine/com/cmd/cmd.ts",
+    "lines": 455,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 8887,
+    "review": false
+  },
+  {
+    "path": "engine/com/net/net.ts",
+    "lines": 443,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 9998,
+    "review": false
+  },
+  {
+    "path": "engine/common/level.ts",
+    "lines": 437,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 10090,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-world-stage.ts",
+    "lines": 414,
+    "imports": 10,
+    "dynamicImports": 0,
+    "bytes": 14129,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-zip.ts",
+    "lines": 408,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 13139,
+    "review": false
+  },
+  {
+    "path": "engine/common/viewmodel.ts",
+    "lines": 404,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 11358,
+    "review": false
+  },
+  {
+    "path": "engine/common/character_controllers.ts",
+    "lines": 403,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 11584,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-menu-stage.ts",
+    "lines": 393,
+    "imports": 10,
+    "dynamicImports": 0,
+    "bytes": 11880,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_init.ts",
+    "lines": 379,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 9467,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-defaults.ts",
+    "lines": 378,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 31874,
+    "review": false
+  },
+  {
+    "path": "engine/common/common.ts",
+    "lines": 372,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 8092,
+    "review": false
+  },
+  {
+    "path": "engine/common/mantle.ts",
+    "lines": 352,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 9613,
+    "review": false
+  },
+  {
+    "path": "engine/common/collision_capsule.ts",
+    "lines": 349,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 8378,
+    "review": false
+  },
+  {
+    "path": "engine/common/cvar.ts",
+    "lines": 347,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 8539,
+    "review": false
+  },
+  {
+    "path": "engine/common/vid.ts",
+    "lines": 335,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 7182,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/cl_main/cl_state.ts",
+    "lines": 308,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 6314,
+    "review": false
+  },
+  {
+    "path": "engine/common/ladder.ts",
+    "lines": 294,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 8074,
+    "review": false
+  },
+  {
+    "path": "engine/common/hud.ts",
+    "lines": 286,
+    "imports": 7,
+    "dynamicImports": 0,
+    "bytes": 8960,
+    "review": false
+  },
+  {
+    "path": "engine/common/material_assets.ts",
+    "lines": 263,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 7315,
+    "review": false
+  },
+  {
+    "path": "engine/com/host/host.ts",
+    "lines": 259,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 5830,
+    "review": false
+  },
+  {
+    "path": "engine/common/movement_recording.ts",
+    "lines": 255,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 5678,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-xanim.ts",
+    "lines": 254,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 6561,
+    "review": false
+  },
+  {
+    "path": "engine/common/movement_events.ts",
+    "lines": 249,
+    "imports": 3,
+    "dynamicImports": 0,
+    "bytes": 7420,
+    "review": false
+  },
+  {
+    "path": "browser/retail-files.mjs",
+    "lines": 240,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 7889,
+    "review": false
+  },
+  {
+    "path": "browser/local-assets.sw.mjs",
+    "lines": 237,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 7449,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-constants.ts",
+    "lines": 226,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 8851,
+    "review": false
+  },
+  {
+    "path": "engine/common/collision_broadphase.ts",
+    "lines": 224,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 5107,
+    "review": false
+  },
+  {
+    "path": "engine/common/commands.ts",
+    "lines": 204,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 5284,
+    "review": false
+  },
+  {
+    "path": "engine/common/types.ts",
+    "lines": 203,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 4806,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_frame.ts",
+    "lines": 201,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 4642,
+    "review": false
+  },
+  {
+    "path": "browser/install.mjs",
+    "lines": 197,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 5531,
+    "review": false
+  },
+  {
+    "path": "engine/common/math.ts",
+    "lines": 197,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 3909,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_surface.ts",
+    "lines": 196,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 4348,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-png.ts",
+    "lines": 195,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 5923,
+    "review": false
+  },
+  {
+    "path": "browser/preview.mjs",
+    "lines": 194,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 5194,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-effects-stage.ts",
+    "lines": 193,
+    "imports": 3,
+    "dynamicImports": 0,
+    "bytes": 5206,
+    "review": false
+  },
+  {
+    "path": "engine/common/cg_view.ts",
+    "lines": 193,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 7002,
+    "review": false
+  },
+  {
+    "path": "engine/common/weapon_spread.ts",
+    "lines": 186,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 5555,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-context.ts",
+    "lines": 181,
+    "imports": 5,
+    "dynamicImports": 1,
+    "bytes": 5248,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/cl_main/scr_menu/mp_main_menu/internal/menu_def.ts",
+    "lines": 180,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 5222,
+    "review": false
+  },
+  {
+    "path": "engine/common/lightgrid.ts",
+    "lines": 173,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 5087,
+    "review": false
+  },
+  {
+    "path": "engine/common/ui_text.ts",
+    "lines": 170,
+    "imports": 5,
+    "dynamicImports": 0,
+    "bytes": 4418,
+    "review": false
+  },
+  {
+    "path": "engine/common/stance.ts",
+    "lines": 164,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 4469,
+    "review": false
+  },
+  {
+    "path": "browser/launcher-runtime.mjs",
+    "lines": 161,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 4209,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-materials.ts",
+    "lines": 152,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 5494,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/usercmd/usercmd.ts",
+    "lines": 150,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 3207,
+    "review": false
+  },
+  {
+    "path": "engine/common/ui_layout.ts",
+    "lines": 148,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 3752,
+    "review": false
+  },
+  {
+    "path": "engine/common/landing.ts",
+    "lines": 147,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 4071,
+    "review": false
+  },
+  {
+    "path": "engine/common/sound_alias.ts",
+    "lines": 147,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 3837,
+    "review": false
+  },
+  {
+    "path": "browser/runtime/import.worker.js",
+    "lines": 136,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 3942,
+    "review": false
+  },
+  {
+    "path": "browser/demand-client.mjs",
+    "lines": 128,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 5370,
+    "review": false
+  },
+  {
+    "path": "engine/common/lean.ts",
+    "lines": 117,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 3782,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-audio-stage.ts",
+    "lines": 114,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 5003,
+    "review": false
+  },
+  {
+    "path": "browser/demand-cache.mjs",
+    "lines": 112,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 4633,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-fonts.ts",
+    "lines": 111,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 3276,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-stage-constants.ts",
+    "lines": 111,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 3541,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-asset-compiler.ts",
+    "lines": 110,
+    "imports": 2,
+    "dynamicImports": 9,
+    "bytes": 4410,
+    "review": false
+  },
+  {
+    "path": "browser/db.mjs",
+    "lines": 109,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 3116,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-cache.ts",
+    "lines": 108,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 2756,
+    "review": false
+  },
+  {
+    "path": "engine/common/ui_controls.ts",
+    "lines": 97,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 2735,
+    "review": false
+  },
+  {
+    "path": "browser/runtime-assets.ts",
+    "lines": 92,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 2720,
+    "review": false
+  },
+  {
+    "path": "engine/common/step_view.ts",
+    "lines": 92,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 2590,
+    "review": false
+  },
+  {
+    "path": "browser/runtime/demand.worker.js",
+    "lines": 90,
+    "imports": 9,
+    "dynamicImports": 0,
+    "bytes": 3630,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-map-metadata.ts",
+    "lines": 81,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 3902,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-model-stage.ts",
+    "lines": 81,
+    "imports": 4,
+    "dynamicImports": 0,
+    "bytes": 3684,
+    "review": false
+  },
+  {
+    "path": "engine/common/bindings.ts",
+    "lines": 80,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 2074,
+    "review": false
+  },
+  {
+    "path": "browser/opfs-writer.mjs",
+    "lines": 78,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 2331,
+    "review": false
+  },
+  {
+    "path": "browser/asset-routing.mjs",
+    "lines": 69,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 2704,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-metadata-stage.ts",
+    "lines": 69,
+    "imports": 2,
+    "dynamicImports": 1,
+    "bytes": 2060,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/internal/rgpu_menu_contract.ts",
+    "lines": 65,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 2200,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/internal/rgpu_draw_contract.ts",
+    "lines": 64,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 2023,
+    "review": false
+  },
+  {
+    "path": "browser/async.mjs",
+    "lines": 55,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 1446,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-pipeline.ts",
+    "lines": 54,
+    "imports": 5,
+    "dynamicImports": 0,
+    "bytes": 1929,
+    "review": false
+  },
+  {
+    "path": "engine/common/loading.ts",
+    "lines": 52,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 1403,
+    "review": false
+  },
+  {
+    "path": "engine/common/level_assets.ts",
+    "lines": 51,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 2262,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/cl_main/scr_menu/mp_main_menu/menus.ts",
+    "lines": 50,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 1575,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-names.ts",
+    "lines": 48,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 1439,
+    "review": false
+  },
+  {
+    "path": "engine/common/asset_jobs.ts",
+    "lines": 44,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 1543,
+    "review": false
+  },
+  {
+    "path": "engine/common/frame_clock.ts",
+    "lines": 43,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 1262,
+    "review": false
+  },
+  {
+    "path": "browser/source-files.mjs",
+    "lines": 39,
+    "imports": 2,
+    "dynamicImports": 0,
+    "bytes": 1665,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-contracts.ts",
+    "lines": 37,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 882,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/cl_main/scr_menu/mp_main_menu/internal/menu_strings.ts",
+    "lines": 32,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 871,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-crc.ts",
+    "lines": 27,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 711,
+    "review": false
+  },
+  {
+    "path": "engine/com/client/screen/scr_draw/rgpu/rgpu_menu/internal/rgpu_menu_materials.ts",
+    "lines": 25,
+    "imports": 1,
+    "dynamicImports": 0,
+    "bytes": 826,
+    "review": false
+  },
+  {
+    "path": "browser/decoders/retail-preprocessor.ts",
+    "lines": 13,
+    "imports": 0,
+    "dynamicImports": 0,
+    "bytes": 357,
+    "review": false
+  }
+]

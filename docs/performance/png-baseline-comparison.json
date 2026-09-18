@@ -1,0 +1,41 @@
+{
+  "scope": "Synthetic PNG encoding in Node; not an end-to-end game/browser benchmark.",
+  "node": "v22.16.0",
+  "baseline": "Unfiltered RGBA + CompressionStream(deflate)",
+  "candidate": "Shipped raw scanlines + Blob stream + CompressionStream(deflate)",
+  "cases": [
+    {
+      "kind": "gradient",
+      "width": 1024,
+      "height": 1024,
+      "trials": 5,
+      "baselineMedianMs": 11.65,
+      "candidateMedianMs": 12.68,
+      "speedup": 0.92,
+      "baselineBytes": 23920,
+      "candidateBytes": 23920
+    },
+    {
+      "kind": "blocks",
+      "width": 1024,
+      "height": 1024,
+      "trials": 5,
+      "baselineMedianMs": 11.26,
+      "candidateMedianMs": 12.7,
+      "speedup": 0.89,
+      "baselineBytes": 74236,
+      "candidateBytes": 74236
+    },
+    {
+      "kind": "noise",
+      "width": 1024,
+      "height": 1024,
+      "trials": 5,
+      "baselineMedianMs": 132,
+      "candidateMedianMs": 129.95,
+      "speedup": 1.02,
+      "baselineBytes": 3588519,
+      "candidateBytes": 3588519
+    }
+  ]
+}
