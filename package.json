@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "typescript": "5.9.3",
-    "vite": "6.4.3"
+    "vite": "8.3.0"
   },
   "description": "Experimental menu-first, local-file Call of Duty 2 browser client",
   "license": "GPL-3.0-only",
