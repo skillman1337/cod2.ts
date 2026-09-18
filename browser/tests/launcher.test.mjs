@@ -369,7 +369,7 @@ test( 'outdated cache compiler version prompts user to update local cache', asyn
 } );
 
 test( 'newer remote build revision triggers reload of the launcher', async () => {
-	const h = harness( { cache: false, saved: false, buildRevision: 'local-sha-00000', remoteRevision: 'newer-commit-sha-99999' } );
+	const h = harness( { cache: true, saved: true, buildRevision: 'local-sha-00000', remoteRevision: 'newer-commit-sha-99999' } );
 	await h.done;
 
 	assert.ok( h.calls.includes( 'location-reload' ) );

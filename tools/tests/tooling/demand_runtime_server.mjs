@@ -35,10 +35,13 @@ const server = http.createServer( ( request, response ) => {
 	if ( !name || name === 'empty.html' ) { response.setHeader( 'Content-Type', 'text/html' ); response.end( name ? '<!doctype html><title>Second tab</title>' : html ); return; }
 	if ( /^(assets|maps|characters|viewmodels|sound|weaponfx)\//.test( name ) ) mediaFallbacks++;
 	let bytes;
-	if ( dist && ( /^(?:app-code|browser-runtime)\//.test( name ) || name === 'local-assets.sw.js' || name === 'launcher.html' ) ) {
+	if ( dist && ( /^(?:app-code|browser-runtime)\//.test( name ) || name === 'local-assets.sw.js' || name === 'launcher.html' || name === 'build-info.json' ) ) {
 		const file = path.join( dist, name === 'launcher.html' ? 'index.html' : name );
 		if ( fs.existsSync( file ) && fs.statSync( file ).isFile() ) bytes = fs.readFileSync( file );
 	} else bytes = runtime.get( name );
+	if ( name === 'build-info.json' && !bytes ) {
+		bytes = Buffer.from( JSON.stringify( { base, revision: null, compilerVersion: 2, cacheVersion: 5 } ) );
+	}
 	if ( name === 'browser/deployment.mjs' ) bytes = runtime.get( 'browser-runtime/deployment.mjs' );
 	if ( !bytes && /^browser\/[a-z0-9_./-]+\.mjs$/i.test( name ) ) {
 		const source = path.join( root, name );

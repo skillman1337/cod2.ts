@@ -535,7 +535,7 @@ Returns remote build info or null if inaccessible or running.
 ====================
 */
 async function checkRemoteUpdate() {
-	if ( typeof fetch !== 'function' ) {
+	if ( typeof fetch !== 'function' || !BUILD_REVISION ) {
 		return null;
 	}
 
@@ -547,6 +547,7 @@ async function checkRemoteUpdate() {
 		} );
 
 		if ( !response.ok ) {
+			await response.text().catch( () => {} );
 			return null;
 		}
 
@@ -580,13 +581,12 @@ async function boot() {
 	ui.begin( 'check' );
 	mark( 'cache-check-start' );
 
-	const [savedDir, activeGen, savedCompilerVer, remoteUpdate] = await Promise.all( [
+	const [savedDir, activeGen, savedCompilerVer] = await Promise.all( [
 		getSetting( 'directory' ),
 		activeGeneration( {
 			onProgress: ( { path, done, total } ) => ui.task( { path, detail: `${done} / ${total} FILES CHECKED` } ),
 		} ),
 		getSetting( 'compilerVersion' ),
-		checkRemoteUpdate(),
 	] );
 
 	saved = savedDir;
@@ -596,6 +596,9 @@ async function boot() {
 	measure( 'cache-validation', 'cache-check-start', 'cache-check-end' );
 
 	const manage = new URLSearchParams( location.search ).get( 'assets' ) === 'manage';
+
+	// Probe for remote deployment updates when user has an active or saved installation
+	const remoteUpdate = ( saved || cached ) ? await checkRemoteUpdate() : null;
 
 	// Detect if a newer code revision was deployed to the server
 	if ( remoteUpdate?.revision && typeof BUILD_REVISION === 'string' && remoteUpdate.revision !== BUILD_REVISION ) {
